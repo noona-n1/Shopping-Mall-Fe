@@ -1,0 +1,9 @@
+[build]
+  command = "CI=false npm run build"
+  publish = "build"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://of-you-150add69b1bb.herokuapp.com/api/:splat"
+  status = 200
+  force = true
