@@ -1,10 +1,12 @@
 .sub-title-wrab {
+  width: 100%;
+  margin-top: 200px;
+}
+.sub-title-name {
   padding-top: 55px;
   padding-bottom: 36px;
-  text-align: center;
   font-size: 32px;
 }
-
 .member-join .join-content {
   padding-top: 50px;
   padding-bottom: 50px;
@@ -15,7 +17,7 @@
 .form-container {
   display: flex;
   gap: 20px; /* 로그인 필드와 버튼 간격 */
-  margin: 0px 252.5px;
+  margin: 0px 250px;
 }
 
 .login-wrab {
@@ -28,6 +30,7 @@
 .login-wrab p {
   display: flex;
   align-items: center;
+  width: calc(100% + 81px);
   gap: 10px;
   margin: 0px;
 }
@@ -39,7 +42,8 @@
 }
 
 .form-control {
-  width: 420px;
+  width: calc(100% - 200px);
+  max-width: 420px; /* 최대 너비 제한 */
   height: 40px;
   padding-left: 20px;
   border: 1px solid #f2f2f2;
@@ -53,9 +57,16 @@
   border-color: #333;
   background-color: #ffffff;
 }
-
+.login-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 250px;
+}
 .login-button {
-  width: 190px;
+  width: 100%;
+  max-width: 190px;
+  min-width: 150px;
   height: 95px;
   background-color: #000;
   color: #fff;
@@ -64,11 +75,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  flex: none;
   justify-content: center;
   transition: background-color 0.3s;
 }
-
 .login-button:hover {
   background-color: #333;
 }
@@ -77,8 +86,8 @@
   display: none;
 }
 .custom-checkbox {
-  margin-top: 5px;
-  margin-left: 113px;
+  margin-top: 15px;
+  margin-left: 110px;
   display: flex;
   align-items: center;
 }
@@ -92,10 +101,13 @@
   position: relative;
   margin-top: 0px;
   margin-right: 8px;
+  padding-bottom: 0;
   cursor: pointer;
   transition: border-color 0.3s;
 }
-
+.input-line {
+  margin: 0px;
+}
 /* 체크박스 선택 시 스타일 */
 .custom-checkbox input[type='checkbox']:checked + .checkmark {
   border-color: #666; /* 선택 시 테두리 색상 */
@@ -176,4 +188,84 @@
   height: 50px;
   background-color: white;
   border: solid 1px;
+}
+@media (max-width: 1100px) {
+  .form-container {
+    margin: 0px 120px;
+  }
+  .login-option {
+    margin: 0px 120px;
+  }
+}
+@media (max-width: 768px) {
+  .form-container {
+    margin: 0px;
+  }
+  .member-join .join-content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 0px;
+
+    border-top: 2px solid #171717;
+  }
+  .login-option {
+    margin: 0px;
+  }
+  .email-content,
+  .sns-content {
+    display: none; 
+  }
+  .join-email .join-sns{
+    padding: 10px;
+  }
+}
+@media (max-width: 500px) {
+  .form-container {
+    flex-direction: column; /* 열 방향으로 변경하여 버튼이 아래로 이동 */
+    margin: 0px;
+    align-items: center; /* 요소들을 가운데 정렬 */
+  }
+  .login-wrab {
+    width: 100%; /* 전체 너비 사용 */
+  }
+  .join-email{
+    padding:10px;
+  }
+  .join-sns{
+    padding:10px;
+  }
+  .link{
+margin-right: 10px;
+  }
+  .form-control {
+    width: 60%; /* 인풋을 전체 너비로 설정 */
+    max-width: 420px; /* 최대 너비 제한 */
+    margin: 0;
+  }
+  .custom-checkbox {
+    margin-left: 80px;
+  }
+  .login-option {
+    margin-right: 30px;
+  }
+  .login-button {
+    display: block;
+    min-width: 400px;
+    width: 100%;
+    max-width: 100%; 
+    height: 50px;
+    margin-top: 10px; /
+  }
+  .login-option {
+    margin: 0px;
+  }
+  .custom-checkbox {
+    margin-top: 15px;
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .sub-title-wrab {
+    margin-top: 100px;
+}
 }
