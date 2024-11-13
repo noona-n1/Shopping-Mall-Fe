@@ -44,6 +44,16 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+
+      <div className='join-email'>
+        <div className='email-content'>이메일로 간편하고 빠르게!</div>
+        <button className='email-signup'>이메일로 가입하기</button>
+      </div>
+
+      <div className='join-sns'>
+        <div className='sns-content'>SNS계정으로 of you를 이용해보세요</div>
+        <button className='sns-sighup'>카카오로 시작하기</button>
+      </div>
     </>
   );
 };

@@ -8,6 +8,8 @@
 
 .member-join .join-content {
   padding-top: 50px;
+  padding-bottom: 50px;
+
   border-top: 2px solid #171717;
 }
 
@@ -138,4 +140,41 @@
   padding-right: 10px;
   border: solid #999;
   border-width: 0 1px 0 0;
+}
+.join-email {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #999;
+  border-width: 1px 0 0 0;
+}
+
+.email-content {
+  flex: 1;
+}
+.email-signup {
+  flex: 1;
+  width: 326px;
+  height: 50px;
+  background-color: white;
+  border: solid 1px;
+}
+.join-sns {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #999;
+  border-width: 0 0 1px 0;
+}
+.sns-content {
+  flex: 1;
+}
+.sns-signup {
+  flex: 1;
+  width: 326px;
+  height: 50px;
+  background-color: white;
+  border: solid 1px;
 }
