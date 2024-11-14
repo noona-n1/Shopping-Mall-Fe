@@ -3,33 +3,94 @@ import './style/SignupPage.style.css';
 import '../../App.css';
 
 const SignupPage = () => {
-  const [agreeAll, setAgreeAll] = useState(false);
-  const [agreements, setAgreements] = useState({
-    agree1: false,
-    agree2: false,
-    agree3: false
+  const [formData, setFormData] = useState({
+    emailId: '',
+    emailDomain: '',
+    password: '',
+    passwordConfirm: '',
+    name: '',
+    agreements: {
+      agreeAll: false,
+      agree1: false,
+      agree2: false,
+      agree3: false
+    }
   });
+  const [errors, setErrors] = useState({
+    emailId: '',
+    emailDomain: '',
+    password: '',
+    passwordConfirm: '',
+    name: ''
+  });
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
-  const handleAgreeAllChange = (e) => {
-    const checked = e.target.checked;
-    setAgreeAll(checked);
-    setAgreements({
-      agree1: checked,
-      agree2: checked,
-      agree3: checked
+  // 전체 동의와 개별 동의 체크박스 상태 관리
+  const handleAgreementChange = (e) => {
+    const {name, checked} = e.target;
+
+    // 개별 항목의 체크 상태 업데이트
+    setFormData((prevData) => {
+      const updatedAgreements = {
+        ...prevData.agreements,
+        [name]: checked
+      };
+
+      // 모든 개별 항목이 체크되면 `agreeAll`을 true로 설정, 하나라도 해제되면 false
+      const allChecked = updatedAgreements.agree1 && updatedAgreements.agree2 && updatedAgreements.agree3;
+
+      return {
+        ...prevData,
+        agreements: {
+          ...updatedAgreements,
+          agreeAll: allChecked
+        }
+      };
     });
   };
 
-  const handleAgreementChange = (e) => {
-    const {name, checked} = e.target;
-    setAgreements((prev) => ({...prev, [name]: checked}));
+  const handleAgreeAllChange = (e) => {
+    const {checked} = e.target;
 
-    if (!checked) {
-      setAgreeAll(false);
-    } else if (Object.values({...agreements, [name]: checked}).every(Boolean)) {
-      setAgreeAll(true);
+    // 전체 동의 시 모든 개별 항목을 `checked` 상태로 설정
+    setFormData((prevData) => ({
+      ...prevData,
+      agreements: {
+        agreeAll: checked,
+        agree1: checked,
+        agree2: checked,
+        agree3: checked
+      }
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form data submitted:', formData);
+      // 여기에 API 요청을 추가하여 폼 데이터를 서버로 전송합니다.
     }
   };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.emailId) newErrors.emailId = '이메일 아이디를 입력해 주세요.';
+    if (!formData.emailDomain) newErrors.emailDomain = '도메인을 입력해 주세요.';
+    if (!formData.password) newErrors.password = '비밀번호를 입력해 주세요.';
+    if (formData.password !== formData.passwordConfirm) newErrors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+    if (!formData.name) newErrors.name = '이름을 입력해 주세요.';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   return (
     <section className='container'>
       <div className='sub-title-wrap'>
@@ -48,19 +109,41 @@ const SignupPage = () => {
             </div>
             <div className='col-right'>
               <div className='email-container'>
-                <input type='text' placeholder='이메일 입력' className='email-input' />
+                <input
+                  type='text'
+                  placeholder='이메일 입력'
+                  className='email-input'
+                  name='emailId'
+                  value={formData.emailId}
+                  onChange={handleInputChange}
+                />
                 <span className='at-symbol'>@</span>
-                <input type='text' placeholder='도메인 입력' className='domain-input' />
-                <select className='domain-select'>
-                  <option>선택</option>
-                  <option>gmail.com</option>
-                  <option>naver.com</option>
-                  <option>hanmail.net</option>
-                  <option>nate.com</option>
-                  <option>daun.net</option>
-                  <option>직접입력</option>
+                <input
+                  type='text'
+                  placeholder='도메인 입력'
+                  className='domain-input'
+                  name='emailDomain'
+                  value={formData.emailDomain}
+                  onChange={handleInputChange}
+                />
+                <select
+                  className='domain-select'
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      emailDomain: e.target.value
+                    })
+                  }>
+                  <option value=''>선택</option>
+                  <option value='gmail.com'>gmail.com</option>
+                  <option value='naver.com'>naver.com</option>
+                  <option value='hanmail.net'>hanmail.net</option>
+                  <option value='nate.com'>nate.com</option>
+                  <option value='daum.net'>daum.net</option>
+                  <option value='직접입력'>직접입력</option>
                 </select>
-                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
+                {errors.emailId && <span className='warning'>{errors.emailId}</span>}
+                {errors.emailDomain && <span className='warning'>{errors.emailDomain}</span>}
               </div>
             </div>
           </div>
@@ -70,8 +153,15 @@ const SignupPage = () => {
             </div>
             <div className='col-right'>
               <div className='password-container'>
-                <input type='text' placeholder='영문+숫자 조합 8~16자리' className='input' />
-                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
+                <input
+                  type='password'
+                  placeholder='영문+숫자 조합 8~16자리'
+                  className='input'
+                  name='password'
+                  value={formData.password}
+                  onChange={handleInputChange}
+                />
+                {errors.password && <span className='warning'>{errors.password}</span>}
               </div>
             </div>
           </div>
@@ -81,8 +171,14 @@ const SignupPage = () => {
             </div>
             <div className='col-right'>
               <div className='password-container'>
-                <input type='text' className='input' />
-                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
+                <input
+                  type='password'
+                  className='input'
+                  name='passwordConfirm'
+                  value={formData.passwordConfirm}
+                  onChange={handleInputChange}
+                />
+                {errors.passwordConfirm && <span className='warning'>{errors.passwordConfirm}</span>}
               </div>
             </div>
           </div>
@@ -91,7 +187,17 @@ const SignupPage = () => {
               이름<span className='required'>*</span>
             </div>
             <div className='col-right'>
-              <input type='text' placeholder='ex) 홍길동' className='input' />
+              <div className='name-container'>
+                <input
+                  type='text'
+                  placeholder='ex) 홍길동'
+                  className='input'
+                  name='name'
+                  value={formData.name}
+                  onChange={handleInputChange}
+                />
+                {errors.name && <span className='warning'>{errors.name}</span>}
+              </div>
             </div>
           </div>
         </div>
@@ -99,35 +205,45 @@ const SignupPage = () => {
       <div className='agreement-container'>
         <div className='agreement-details'>
           <label className='agreement-all'>
-            <input type='checkbox' checked={agreeAll} onChange={handleAgreeAllChange} />
+            <input
+              type='checkbox'
+              name='agreeAll'
+              checked={formData.agreements.agreeAll}
+              onChange={handleAgreeAllChange}
+            />
             전체 동의합니다
           </label>
-          <label className='agreement-all-content'>
-            <p>전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다.</p>
-            선택항목에 대한 동의를 거부하는 경우에도 회원가입 서비스는 이용 가능합니다.
+          <label className='agreement'>
+            <input
+              type='checkbox'
+              name='agree1'
+              checked={formData.agreements.agree1}
+              onChange={handleAgreementChange}
+            />
+            <div className='agreement-text'>만 14세 이상입니다 (필수)</div>
           </label>
           <label className='agreement'>
-            <input type='checkbox' name='agree1' checked={agreements.agree1} onChange={handleAgreementChange} />
-            <div class='agreement-text'>만 14세 이상입니다 (필수)</div>
-            <button class='btn-detail'>내용보기</button>
+            <input
+              type='checkbox'
+              name='agree2'
+              checked={formData.agreements.agree2}
+              onChange={handleAgreementChange}
+            />
+            <div className='agreement-text'>서비스 이용 약관에 동의합니다 (필수)</div>
           </label>
           <label className='agreement'>
-            <input type='checkbox' name='agree2' checked={agreements.agree2} onChange={handleAgreementChange} />
-            <div class='agreement-text'>서비스 이용 약관에 동의합니다 (필수)</div>
-
-            <button class='btn-detail'>내용보기</button>
-          </label>
-          <label className='agreement'>
-            <input type='checkbox' name='agree3' checked={agreements.agree3} onChange={handleAgreementChange} />
-            <div class='agreement-text'>개인정보 처리 방침에 동의합니다 (필수)</div>
-
-            <button class='btn-detail'>내용보기</button>
+            <input
+              type='checkbox'
+              name='agree3'
+              checked={formData.agreements.agree3}
+              onChange={handleAgreementChange}
+            />
+            <div className='agreement-text'>개인정보 처리 방침에 동의합니다 (필수)</div>
           </label>
         </div>
-      </div>
-      <div className='center'>
-        <button class='button cancel'>취소</button>
-        <button class='button confirm'>확인</button>
+        <button className='button confirm' onClick={handleSubmit}>
+          확인
+        </button>
       </div>
     </section>
   );

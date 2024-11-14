@@ -116,6 +116,10 @@
   gap: 5px; /* 입력 필드 간격 */
 }
 
+.name-container {
+  margin-bottom: 20px;
+}
+
 .required {
   color: #ff6160;
 }
@@ -168,6 +172,7 @@
   font-weight: bold;
   text-align: start;
   margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .agreement-all-content {
@@ -175,7 +180,6 @@
   text-align: left;
   margin-bottom: 10px;
   font-size: small;
-  /* 768사이즈 스몰 */
 }
 
 .agreement-details {
