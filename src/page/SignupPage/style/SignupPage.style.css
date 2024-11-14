@@ -56,7 +56,10 @@
 }
 
 /* 화면 너비가 400px 이하일 때 */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+  .sub-title {
+    margin-top: 150px;
+  }
   .container {
     margin: 20px;
   }
@@ -221,6 +224,7 @@ input[type='checkbox'] {
   align-items: center;
 }
 .button {
+  cursor: pointer;
   margin-top: 30px;
   width: 180px;
   height: 50px;
@@ -233,4 +237,7 @@ input[type='checkbox'] {
 .confirm {
   background-color: black;
   color: white;
+}
+.agree {
+  margin-bottom: 10px;
 }

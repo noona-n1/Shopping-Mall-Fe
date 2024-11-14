@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import './style/SignupPage.style.css';
 import '../../App.css';
+import {useDispatch, useSelector} from 'react-redux';
+import {registerUser} from '../../features/user/userSlice';
+import {useNavigate} from 'react-router';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     emailId: '',
     emailDomain: '',
@@ -21,7 +26,8 @@ const SignupPage = () => {
     emailDomain: '',
     password: '',
     passwordConfirm: '',
-    name: ''
+    name: '',
+    agreements: ''
   });
   const handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -58,7 +64,6 @@ const SignupPage = () => {
   const handleAgreeAllChange = (e) => {
     const {checked} = e.target;
 
-    // 전체 동의 시 모든 개별 항목을 `checked` 상태로 설정
     setFormData((prevData) => ({
       ...prevData,
       agreements: {
@@ -70,14 +75,6 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Form data submitted:', formData);
-      // 여기에 API 요청을 추가하여 폼 데이터를 서버로 전송합니다.
-    }
-  };
-
   const validateForm = () => {
     const newErrors = {};
 
@@ -87,8 +84,50 @@ const SignupPage = () => {
     if (formData.password !== formData.passwordConfirm) newErrors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
     if (!formData.name) newErrors.name = '이름을 입력해 주세요.';
 
+    if (!formData.agreements.agree1 || !formData.agreements.agree2 || !formData.agreements.agree3) {
+      newErrors.agreements = '필수 동의 항목에 모두 동의해 주세요.';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form data submitted:', formData);
+      dispatch(
+        registerUser({
+          name: formData.name,
+          email: `${formData.emailId}@${formData.emailDomain}`,
+          password: formData.password,
+          navigate
+        })
+      );
+      // setFormData({
+      //   emailId: '',
+      //   emailDomain: '',
+      //   password: '',
+      //   passwordConfirm: '',
+      //   name: '',
+      //   agreements: {
+      //     agreeAll: false,
+      //     agree1: false,
+      //     agree2: false,
+      //     agree3: false
+      //   }
+      // });
+      // setErrors({
+      //   emailId: '',
+      //   emailDomain: '',
+      //   password: '',
+      //   passwordConfirm: '',
+      //   name: ''
+      // });
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/login');
   };
 
   return (
@@ -213,6 +252,8 @@ const SignupPage = () => {
             />
             전체 동의합니다
           </label>
+          {errors.agreements && <span className='warning agree'>{errors.agreements}</span>}
+
           <label className='agreement'>
             <input
               type='checkbox'
@@ -241,9 +282,14 @@ const SignupPage = () => {
             <div className='agreement-text'>개인정보 처리 방침에 동의합니다 (필수)</div>
           </label>
         </div>
-        <button className='button confirm' onClick={handleSubmit}>
-          확인
-        </button>
+        <div className='center'>
+          <button className='button cancel' onClick={handleCancel}>
+            취소
+          </button>
+          <button className='button confirm' onClick={handleSubmit}>
+            확인
+          </button>
+        </div>
       </div>
     </section>
   );

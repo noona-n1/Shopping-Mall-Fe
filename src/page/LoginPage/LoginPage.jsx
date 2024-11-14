@@ -1,8 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../App.css';
 import './style/LoginPage.style.css';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import {loginWithEmail} from '../../features/user/userSlice';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {user, loginError} = useSelector((state) => state.user);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (loginError) {
+      dispatch(clearErrors());
+    }
+  }, [dispatch]);
+
+  const handleLoginWithEmail = (e) => {
+    e.preventDefault();
+    dispatch(loginWithEmail({email, password}));
+  };
+
   return (
     <>
       <div className='sub-title-wrab'>
@@ -15,15 +41,27 @@ const LoginPage = () => {
               <div className='login-wrab'>
                 <p className='input-line'>
                   <label>이메일 아이디</label>
-                  <input type='text' className='form-control' placeholder='이메일 입력' />
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='이메일 입력'
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </p>
                 <p className='input-line'>
                   <label>비밀번호</label>
-                  <input type='password' className='form-control' placeholder='비밀번호 입력' />
+                  <input
+                    type='password'
+                    className='form-control'
+                    placeholder='비밀번호 입력'
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </p>
               </div>
               <div>
-                <button className='login-button'>로그인</button>
+                <button className='login-button' onClick={handleLoginWithEmail}>
+                  로그인
+                </button>
               </div>
             </div>
             <div className='login-option'>
