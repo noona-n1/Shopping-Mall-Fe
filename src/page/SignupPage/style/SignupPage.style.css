@@ -1,0 +1,164 @@
+.container {
+  margin-top: 200px;
+}
+
+.sub-title-wrap {
+  padding-bottom: 36px;
+}
+
+.sub-title {
+}
+
+.member-join {
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+}
+
+.table-notice {
+  display: flex;
+  justify-content: end;
+}
+
+.strong {
+  background-color: #ff6160;
+  color: white;
+  font-size: larger;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-table {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  row-gap: 10px;
+}
+
+.row {
+  display: contents;
+  border: 0 1px;
+}
+.col-left {
+  text-align: left;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.col-right {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* 입력 필드 간격 */
+}
+
+.required {
+  color: #ff6160;
+}
+
+.email-container {
+}
+
+.email-input,
+.domain-input {
+  height: 40px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #f2f2f2;
+  background-color: #f7f7f7;
+  width: 100px;
+}
+.input {
+  height: 40px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #f2f2f2;
+  background-color: #f7f7f7;
+  width: 315px;
+}
+
+.at-symbol {
+  padding: 0 5px;
+}
+
+.domain-select {
+  padding: 10px;
+  border: 1px solid #f2f2f2;
+  background-color: #f7f7f7;
+  width: 90px;
+}
+
+.email-warning {
+  color: #f87c6e;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.agreement-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 각 줄 간격 */
+}
+
+.agreement-all {
+  font-weight: bold;
+  text-align: start;
+  margin-top: 30px;
+}
+
+.agreement-all-content {
+  margin-left: 40px;
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: small;
+  /* 768사이즈 스몰 */
+}
+
+.agreement-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.agreement {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  justify-content: space-between; /* 좌우 요소를 양쪽 끝으로 정렬 */
+
+  font-size: 14px;
+  cursor: pointer;
+  height: 50px;
+}
+.agreement-text {
+  flex: 1;
+  text-align: left;
+}
+
+input[type='checkbox'] {
+  margin-right: 8px; /* 체크박스와 텍스트 간격 */
+  margin-left: 20px;
+}
+
+.btn-detail {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+  border: 1px solid #333;
+  padding: 0 5px;
+}
+.button {
+  margin-top: 30px;
+  width: 180px;
+  height: 50px;
+  border: 1px solid #333;
+}
+.cancel {
+  background-color: white;
+  margin-right: 20px;
+}
+.confirm {
+  background-color: black;
+  color: white;
+}
