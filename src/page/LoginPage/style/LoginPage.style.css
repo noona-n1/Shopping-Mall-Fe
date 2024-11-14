@@ -215,8 +215,11 @@
   .sns-content {
     display: none; 
   }
-  .join-email .join-sns{
-    padding: 10px;
+  .join-email, .join-sns{
+    padding: 30px;
+  }
+  .join-sns{
+    padding-top: 0px;
   }
 }
 @media (max-width: 500px) {
