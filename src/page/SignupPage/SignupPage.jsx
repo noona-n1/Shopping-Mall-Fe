@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './style/SignupPage.style.css';
+import '../../App.css';
 
 const SignupPage = () => {
   const [agreeAll, setAgreeAll] = useState(false);
@@ -59,7 +60,7 @@ const SignupPage = () => {
                   <option>daun.net</option>
                   <option>직접입력</option>
                 </select>
-                <span className='email-warning'>본인 소유의 이메일을 입력해 주세요.</span>
+                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
               </div>
             </div>
           </div>
@@ -68,7 +69,10 @@ const SignupPage = () => {
               비밀번호<span className='required'>*</span>
             </div>
             <div className='col-right'>
-              <input type='text' placeholder='영문+숫자 조합 8~16자리' className='input' />
+              <div className='password-container'>
+                <input type='text' placeholder='영문+숫자 조합 8~16자리' className='input' />
+                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
+              </div>
             </div>
           </div>
           <div className='row'>
@@ -76,7 +80,10 @@ const SignupPage = () => {
               비밀번호 확인<span className='required'>*</span>
             </div>
             <div className='col-right'>
-              <input type='text' className='input' />
+              <div className='password-container'>
+                <input type='text' className='input' />
+                <span className='warning'>본인 소유의 이메일을 입력해 주세요.</span>
+              </div>
             </div>
           </div>
           <div className='row'>
@@ -118,9 +125,10 @@ const SignupPage = () => {
           </label>
         </div>
       </div>
-
-      <button class='button cancel'>취소</button>
-      <button class='button confirm'>확인</button>
+      <div className='center'>
+        <button class='button cancel'>취소</button>
+        <button class='button confirm'>확인</button>
+      </div>
     </section>
   );
 };

@@ -1,12 +1,75 @@
 .container {
-  margin-top: 200px;
+  margin-top: 300px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 36px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
 
+/* 화면 너비가 1200px 이하일 때 */
+@media (max-width: 1260px) {
+  .container {
+    margin-left: 150px;
+    margin-right: 150px;
+  }
+}
+
+/* 화면 너비가 992px 이하일 때 */
+@media (max-width: 1060px) {
+  .container {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  .col-right {
+    display: flex;
+    flex-direction: column; /* 수직 배치 */
+    align-items: flex-start;
+  }
+
+  .warning {
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+/* 화면 너비가 768px 이하일 때 */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 200px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+/* 화면 너비가 576px 이하일 때 */
+@media (max-width: 576px) {
+  .container {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .col-left {
+    padding-left: 20px !important;
+  }
+}
+
+/* 화면 너비가 400px 이하일 때 */
+@media (max-width: 400px) {
+  .container {
+    margin: 20px;
+  }
+}
 .sub-title-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-bottom: 36px;
 }
 
 .sub-title {
+  font-size: 44px;
 }
 
 .member-join {
@@ -31,7 +94,7 @@
 
 .grid-table {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 2fr;
   row-gap: 10px;
 }
 
@@ -41,7 +104,7 @@
 }
 .col-left {
   text-align: left;
-  padding-left: 20px;
+  padding-left: 50px;
   display: flex;
   align-items: center;
   height: 50px;
@@ -89,7 +152,7 @@
   width: 90px;
 }
 
-.email-warning {
+.warning {
   color: #f87c6e;
   font-size: 12px;
   margin-left: 10px;
@@ -147,6 +210,11 @@ input[type='checkbox'] {
   margin-right: 30px;
   border: 1px solid #333;
   padding: 0 5px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .button {
   margin-top: 30px;
