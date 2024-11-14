@@ -405,6 +405,11 @@
     color: #555;
 }
 
+.navbar-popular-search-list,
+.navbar-popular-searches {
+    text-align: left;
+}
+
 .navbar-category-button-icon {
     position: relative;
     top: 2px;
@@ -663,4 +668,5 @@
         display: flex;
         font-size: 0.7rem;
     }
+
 }
