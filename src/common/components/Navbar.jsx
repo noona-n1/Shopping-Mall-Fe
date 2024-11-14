@@ -1,6 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {FiHeart, FiLogIn, FiUser, FiShoppingBag, FiSearch, FiChevronDown, FiMenu, FiArrowLeft} from 'react-icons/fi';
 import './Navbar.style.css';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../features/user/userSlice';
 
 const Navbar = ({user}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -15,6 +18,13 @@ const Navbar = ({user}) => {
     MAN: ['OUTERWEAR', 'TOP', 'BOTTOM', 'ACCESSORIES'],
     BEAUTY: ['SKINCARE', 'MAKEUP', 'HAIR & BODY', 'DEVICES'],
     LIFE: ['HOME', 'TRAVEL', 'DIGITAL', 'CULTURE', 'FOOD']
+  };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   const handleCategoryToggle = () => {
@@ -52,6 +62,10 @@ const Navbar = ({user}) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -129,11 +143,11 @@ const Navbar = ({user}) => {
                 <FiHeart /> LIKE
               </div>
               {user ? (
-                <div className='navbar-icon-item'>
+                <div className='navbar-icon-item' onClick={handleLogout}>
                   <FiLogIn /> LOGOUT
                 </div>
               ) : (
-                <div className='navbar-icon-item'>
+                <div className='navbar-icon-item' onClick={handleNavigation('/login')}>
                   <FiLogIn /> LOGIN
                 </div>
               )}

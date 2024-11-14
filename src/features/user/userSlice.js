@@ -38,6 +38,11 @@ export const loginWithToken = createAsyncThunk('user/loginWithToken', async (_, 
   }
 });
 
+export const logout = () => (dispatch) => {
+  sessionStorage.removeItem('token');
+  dispatch(userSlice.actions.logout());
+};
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
