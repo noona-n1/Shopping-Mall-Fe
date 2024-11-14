@@ -23,10 +23,6 @@ const Navbar = ({user}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-
   const handleCategoryToggle = () => {
     setIsCategoryOpen(!isCategoryOpen);
   };
@@ -65,6 +61,26 @@ const Navbar = ({user}) => {
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleLike = () => {
+    navigate('/like');
+  };
+
+  const handleCart = () => {
+    navigate('/cart');
+  };
+
+  const handleMy = () => {
+    navigate('/account');
+  };
+
+  const handleMain = () => {
+    navigate('/');
   };
 
   return (
@@ -109,7 +125,7 @@ const Navbar = ({user}) => {
               )}
             </div>
             <div className='navbar-logo-container'>
-              <img src='/images/logo.png' alt='logo' className='navbar-logo-image' />
+              <img src='/images/logo.png' alt='logo' className='navbar-logo-image pointer' onClick={handleMain} />
             </div>
           </div>
 
@@ -139,7 +155,7 @@ const Navbar = ({user}) => {
                 <FiSearch />
                 SEARCH
               </div>
-              <div className='navbar-icon-item'>
+              <div className='navbar-icon-item' onClick={handleLike}>
                 <FiHeart /> LIKE
               </div>
               {user ? (
@@ -147,15 +163,15 @@ const Navbar = ({user}) => {
                   <FiLogIn /> LOGOUT
                 </div>
               ) : (
-                <div className='navbar-icon-item' onClick={handleNavigation('/login')}>
+                <div className='navbar-icon-item' onClick={handleLogin}>
                   <FiLogIn /> LOGIN
                 </div>
               )}
 
-              <div className='navbar-icon-item'>
+              <div className='navbar-icon-item' onClick={handleMy}>
                 <FiUser /> MY
               </div>
-              <div className='navbar-icon-item'>
+              <div className='navbar-icon-item' onClick={handleCart}>
                 <FiShoppingBag /> 0
               </div>
             </div>

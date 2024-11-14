@@ -34,7 +34,7 @@ export const loginWithToken = createAsyncThunk('user/loginWithToken', async (_, 
     const response = await api.get('/user/me');
     return response.data;
   } catch (error) {
-    rejectWithValue(error.error);
+    rejectWithValue(error.response?.data || 'An error occurred');
   }
 });
 
@@ -90,6 +90,10 @@ const userSlice = createSlice({
       })
       .addCase(loginWithToken.fulfilled, (state, action) => {
         state.user = action.payload.user;
+      })
+      .addCase(loginWithToken.rejected, (state, action) => {
+        state.user = null;
+        state.error = action.payload;
       });
   }
 });
