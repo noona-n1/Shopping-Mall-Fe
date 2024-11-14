@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {FiHeart, FiLogIn, FiUser, FiShoppingBag, FiSearch, FiChevronDown, FiMenu, FiArrowLeft} from 'react-icons/fi';
 import './Navbar.style.css';
 
-const Navbar = () => {
+const Navbar = ({user}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('WOMAN');
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -115,6 +115,12 @@ const Navbar = () => {
               )}
             </div>
             <div className='navbar-icons'>
+              {user && user.level === 'admin' && (
+                <div className='navbar-icon-item'>
+                  <FiPower />
+                  ADMIN
+                </div>
+              )}
               <div className='search-mobile-view' onClick={handleSearchIconClick}>
                 <FiSearch />
                 SEARCH
@@ -122,9 +128,16 @@ const Navbar = () => {
               <div className='navbar-icon-item'>
                 <FiHeart /> LIKE
               </div>
-              <div className='navbar-icon-item'>
-                <FiLogIn /> LOGIN
-              </div>
+              {user ? (
+                <div className='navbar-icon-item'>
+                  <FiLogIn /> LOGOUT
+                </div>
+              ) : (
+                <div className='navbar-icon-item'>
+                  <FiLogIn /> LOGIN
+                </div>
+              )}
+
               <div className='navbar-icon-item'>
                 <FiUser /> MY
               </div>
