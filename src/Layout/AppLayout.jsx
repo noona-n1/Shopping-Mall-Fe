@@ -8,9 +8,12 @@ const AppLayout = ({ children }) => {
     <div className="app-layout">
       <Navbar />
       <main>{children}
-        {Array.from({ length: 30 }).map((_, index) => (
-          <p key={index}>스크롤 테스트</p>
-        ))}</main>
+
+
+      </main>
+
+      
+
       <Footer />
     </div>
   );
