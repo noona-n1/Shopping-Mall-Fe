@@ -9,7 +9,11 @@ const AppLayout = ({ children }) => {
       <Navbar />
       <main>{children}
 
+
       </main>
+
+      
+
       <Footer />
     </div>
   );
