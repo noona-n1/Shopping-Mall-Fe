@@ -1,10 +1,32 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
-export const loginWithEmail = createAsyncThunk(
-  'user/loginWithEmail'
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async ({email, name, password, navigate}, {rejectWithValue}) => {
+    try {
+      const response = await api.post('/user', {email, name, password});
+      navigate('/login');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.error);
+    }
+  }
+);
 
-  //async ({ email, password }, thunkAPI) => {}
+export const loginWithEmail = createAsyncThunk(
+  'user/loginWithEmail',
+
+  async ({email, password}, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI;
+    try {
+      const response = await api.post('/auth/login', {email, password});
+      sessionStorage.setItem('token', response.data.token);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
 );
 const userSlice = createSlice({
   name: 'user',
@@ -24,6 +46,33 @@ const userSlice = createSlice({
       state.user = null;
       state.loginError = null;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.loginError = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.loginError = action.payload;
+      })
+      .addCase(loginWithEmail.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(loginWithEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.loginError = null;
+      })
+      .addCase(loginWithEmail.rejected, (state, action) => {
+        state.loading = false;
+        state.loginError = action.payload;
+      });
   }
 });
 

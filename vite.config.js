@@ -3,15 +3,19 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://of-you-150add69b1bb.herokuapp.com/',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
+    open: true
+  },
   esbuild: {
     loader: 'jsx',
-    include: [
-      // 이 설정을 통해 모든 .js 파일과 .jsx 파일을 JSX로 처리
-      'src/**/*.js',
-      'src/**/*.jsx'
-    ]
-  },
-  server: {
-    open: true
+    include: ['src/**/*.js', 'src/**/*.jsx']
   }
 });
