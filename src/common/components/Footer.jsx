@@ -4,7 +4,7 @@ import "./Footer.style.css";
 const Footer = () => {
     return (
         <footer className="footer-container">
-            <div class="footer-links-wrapper">
+            <div className="footer-links-wrapper">
                 <div className="footer-links">
                     <a href="#company">회사소개</a>
                     <a href="#consulting">입점상담</a>
