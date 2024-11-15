@@ -68,7 +68,7 @@ const Navbar = ({user}) => {
   };
 
   const handleLike = () => {
-    navigate('/like');
+    navigate('/mypage/like');
   };
 
   const handleCart = () => {
@@ -76,7 +76,7 @@ const Navbar = ({user}) => {
   };
 
   const handleMy = () => {
-    navigate('/account');
+    navigate('/mypage');
   };
 
   const handleMain = () => {

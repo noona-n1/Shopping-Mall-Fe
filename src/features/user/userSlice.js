@@ -109,11 +109,6 @@ const userSlice = createSlice({
       .addCase(loginWithToken.fulfilled, (state, action) => {
         state.user = action.payload.user;
       })
-      .addCase(loginWithToken.rejected, (state, action) => {
-        state.loading = false;
-        state.user = null;
-        state.loginError = action.payload || 'Unable to retrieve user data';
-      })
       .addCase(loginWithGoogle.pending, (state, action) => {
         state.loading = true;
       })

@@ -19,6 +19,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
+    setError('');
     if (savedEmail) {
       setEmail(savedEmail);
       setRememberEmail(true);
@@ -33,8 +34,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (loginError) {
-      dispatch(clearErrors());
       setError('이메일과 비밀번호를 확인해주세요');
+      dispatch(clearErrors());
     }
   }, [loginError, dispatch]);
 
