@@ -37,6 +37,10 @@ const LoginPage = () => {
     }
   }, [loginError, dispatch]);
 
+  const navigateSignupPage = () => {
+    navigate('/signup');
+  };
+
   const handleRememberEmailChange = (e) => {
     setRememberEmail(e.target.checked);
     if (!e.target.checked) {
@@ -142,8 +146,10 @@ const LoginPage = () => {
         </div>
         <div className='join'>
           <div className='join-email'>
-            <div className='email-content'>이메일로 간편하고 빠르게!</div>
-            <button className='email-signup'>이메일로 가입하기</button>
+            <div className='email-content'>이메일로 간편하고 빠르게 회원가입하세요</div>
+            <button className='email-signup' onClick={navigateSignupPage}>
+              이메일로 가입하기
+            </button>
           </div>
           <div className='join-sns'>
             <div className='sns-content'>SNS계정으로 OF YOU를 이용해보세요</div>

@@ -180,6 +180,7 @@
 }
 
 .email-signup {
+  cursor: pointer;
   flex: 1;
   max-width: 326px;
   height: 50px;
@@ -204,6 +205,8 @@
 }
 
 .sns-buttons {
+  cursor: pointer;
+
   flex:1;
   max-width: 326px;
   height: 126px;
