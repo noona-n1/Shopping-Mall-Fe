@@ -1,23 +1,28 @@
 .sub-title-wrab {
-  width: 100%;
-  margin-top: 200px;
+  width: calc(100% -  35vw); 
+  margin: 0 auto; 
+  margin-top: 250px;
 }
+
 .sub-title-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-top: 55px;
-  padding-bottom: 36px;
+  padding-bottom: 55px;
   font-size: 32px;
 }
 .member-join .join-content {
   padding-top: 50px;
   padding-bottom: 50px;
 
-  border-top: 2px solid #171717;
+  border-top: 1px #171717;
 }
 
 .form-container {
   display: flex;
   gap: 20px; 
-  margin: 0px 250px;
+  margin: 0px 150px;
 }
 
 .login-wrab {
@@ -61,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 250px;
+  margin: 0px 160px;
 }
 .login-button {
   width: 100%;
@@ -152,21 +157,28 @@
   border: solid #999;
   border-width: 0 1px 0 0;
 }
+
+.required {
+  color: #ff6160;
+}
+
 .join-email {
   padding: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid #999;
+  border: 999;
   border-width: 1px 0 0 0;
 }
 
 .email-content {
   flex: 1;
   display: flex;
+  max-width: 326px;
   justify-content: center;
   align-items: center;
 }
+
 .email-signup {
   flex: 1;
   max-width: 326px;
@@ -174,18 +186,18 @@
   background-color: white;
   border: solid 1px;
 }
+
 .join-sns {
   
   padding: 50px;
   display: flex;
   justify-content: center;
   align-items: start;
-  border: solid #999;
-  border-width: 0 0 1px 0;
 }
 .sns-content {
   flex: 1;
   display: flex;
+  max-width: 326px;
   justify-content: center;
   align-items: center;
   margin-top: 24px;
@@ -195,7 +207,6 @@
   flex:1;
   max-width: 326px;
   height: 126px;
-
   display: flex;
   flex-direction: column;
   align-items: center; /* 중앙 정렬 */
@@ -233,17 +244,29 @@
   width: 46px;
   height: 46px;
 }
-@media (max-width: 1100px) {
+@media (max-width: 1500px) {
+  .sub-title-wrab {
+    width: calc(100% -  20vw); 
+  }
   .form-container {
-    margin: 0px 120px;
+    margin: 0 150px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .sub-title-wrab {
+    width: calc(100% -  20vw); 
+  }
+  .form-container {
+    margin: 0px 100px;
   }
   .login-option {
-    margin: 0px 120px;
+    margin: 0px 100px;
   }
 }
 @media (max-width: 768px) {
   .form-container {
-    margin: 0px;
+    margin: 0 50px;
   }
   .member-join .join-content {
     padding-top: 50px;
@@ -253,7 +276,7 @@
     border-top: 2px solid #171717;
   }
   .login-option {
-    margin: 0px;
+    margin: 0 20px;
   }
   .email-content,
   .sns-content {
@@ -266,10 +289,20 @@
     padding-top: 0px;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 480px) {
+  .sub-title-wrab {
+    width: calc(100%); 
+    margin-top: 150px;
+    padding-top: 0px;
+    
+  }
+  .sub-title {  
+    font-size: 30px;
+
+  }
   .form-container {
     flex-direction: column; 
-    margin: 0px;
+    margin: 0 50px;
     align-items: center; 
   }
   .login-wrab {
@@ -315,5 +348,7 @@ margin-right: 10px;
   .sub-title-wrab {
     margin-top: 100px;
 }
-
+.sub-title-name {
+  padding-top: 0;
+}
 }

@@ -24,7 +24,7 @@ export const loginWithEmail = createAsyncThunk(
       sessionStorage.setItem('token', response.data.token);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      return rejectWithValue(error.response?.data?.message || '이메일과 비밀번호를 확인해주세요');
     }
   }
 );
@@ -98,7 +98,6 @@ const userSlice = createSlice({
       .addCase(loginWithEmail.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.loginError = null;
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         state.loading = false;
@@ -129,5 +128,6 @@ const userSlice = createSlice({
       });
   }
 });
+export const {clearErrors} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {loginWithEmail, loginWithGoogle} from '../../features/user/userSlice';
 import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from '@react-oauth/google';
+import {clearErrors} from '../../features/user/userSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberEmail, setRememberEmail] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
@@ -21,14 +23,6 @@ const LoginPage = () => {
       setRememberEmail(true);
     }
   }, []);
-
-  const handleRememberEmailChange = (e) => {
-    setRememberEmail(e.target.checked);
-    if (!e.target.checked) {
-      localStorage.removeItem('savedEmail');
-      setEmail('');
-    }
-  };
 
   useEffect(() => {
     if (user) {
@@ -39,14 +33,38 @@ const LoginPage = () => {
   useEffect(() => {
     if (loginError) {
       dispatch(clearErrors());
+      setError('이메일과 비밀번호를 확인해주세요');
     }
-  }, [dispatch]);
+  }, [loginError, dispatch]);
+
+  const handleRememberEmailChange = (e) => {
+    setRememberEmail(e.target.checked);
+    if (!e.target.checked) {
+      localStorage.removeItem('savedEmail');
+      setEmail('');
+    }
+  };
 
   const handleLoginWithEmail = (e) => {
     e.preventDefault();
+    setError(''); // 기존 에러 메시지 초기화
+
+    // 유효성 검사
+    if (!email) {
+      setError('이메일을 입력해 주세요.');
+      return;
+    }
+    if (!password) {
+      setError('이메일과 비밀번호를 확인해 주세요.');
+      return;
+    }
+
+    // 이메일 저장
     if (rememberEmail) {
       localStorage.setItem('savedEmail', email);
     }
+
+    // 로그인 요청
     dispatch(loginWithEmail({email, password}));
   };
 
@@ -81,7 +99,7 @@ const LoginPage = () => {
                   <input
                     type='text'
                     className='form-control'
-                    placeholder='이메일아이디를 @까지 정확하게 입력해주세요'
+                    placeholder='이메일을 입력해주세요'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -91,10 +109,11 @@ const LoginPage = () => {
                   <input
                     type='password'
                     className='form-control'
-                    placeholder='영문+숫자 조합 8~16자리를 입력해주세요'
+                    placeholder='영문+숫자 조합 8~16자리'
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </p>
+                {error && <p className='required'>{error}</p>}
               </div>
               <div>
                 <button className='login-button' onClick={handleLoginWithEmail}>
@@ -103,9 +122,9 @@ const LoginPage = () => {
               </div>
             </div>
             <div className='login-option'>
-              <label class='custom-checkbox'>
+              <label className='custom-checkbox'>
                 <input type='checkbox' checked={rememberEmail} onChange={handleRememberEmailChange} />
-                <span class='checkmark' />
+                <span className='checkmark' />
                 이메일 저장
               </label>
               <ul className='link'>
