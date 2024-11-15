@@ -1,11 +1,11 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {FiHeart, FiLogIn, FiUser, FiShoppingBag, FiSearch, FiChevronDown, FiMenu, FiArrowLeft} from 'react-icons/fi';
+import React, { useState, useRef, useEffect } from 'react';
+import { FiHeart, FiLogIn, FiUser, FiShoppingBag, FiSearch, FiChevronDown, FiMenu, FiArrowLeft } from 'react-icons/fi';
 import './Navbar.style.css';
-import {useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {logout} from '../../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/user/userSlice';
 
-const Navbar = ({user}) => {
+const Navbar = ({ user }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('WOMAN');
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -137,7 +137,7 @@ const Navbar = ({user}) => {
                 <div className='navbar-popular-search-list' ref={popularSearchRef}>
                   <h4>급상승 검색어</h4>
                   <ul>
-                    {Array.from({length: 10}, (_, i) => (
+                    {Array.from({ length: 10 }, (_, i) => (
                       <li key={`popular-${i}`}>{i + 1}. 검색어</li>
                     ))}
                   </ul>
@@ -191,7 +191,7 @@ const Navbar = ({user}) => {
                 <div className='navbar-popular-searches'>
                   <h4>급상승 검색어</h4>
                   <ul>
-                    {Array.from({length: 10}, (_, i) => (
+                    {Array.from({ length: 10 }, (_, i) => (
                       <li key={`popular-${i}`}> {i + 1}. 검색어</li>
                     ))}
                   </ul>
