@@ -22,11 +22,11 @@ function AppRouter() {
       <Route path='/signup' element={<SignupPage />} />
       <Route path='/product/:id' element={<ProductDetail />} />
       <Route element={<PrivateRoute permissionLevel='customer' />}>
-        <Route path='/like' element={<LikePage />} />
         <Route path='/cart' element={<CartPage />} />
         <Route path='/payment' element={<PaymentPage />} />
         <Route path='/payment/success' element={<OrderCompletePage />} />
-        <Route path='/account' element={<MyPage />} />
+        <Route path='/mypage/' element={<MyPage />} />
+        <Route path='/mypage/like' element={<LikePage />} />
       </Route>
       <Route element={<PrivateRoute permissionLevel='admin' />}>
         <Route path='/admin/user' element={<AdminUserPage />} />
