@@ -1,8 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {FiHeart, FiLogIn, FiUser, FiShoppingBag, FiSearch, FiChevronDown, FiMenu, FiArrowLeft} from 'react-icons/fi';
 import './Navbar.style.css';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../features/user/userSlice';
 
-const Navbar = () => {
+const Navbar = ({user}) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('WOMAN');
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -16,6 +19,9 @@ const Navbar = () => {
     BEAUTY: ['SKINCARE', 'MAKEUP', 'HAIR & BODY', 'DEVICES'],
     LIFE: ['HOME', 'TRAVEL', 'DIGITAL', 'CULTURE', 'FOOD']
   };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCategoryToggle = () => {
     setIsCategoryOpen(!isCategoryOpen);
@@ -52,6 +58,30 @@ const Navbar = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleLike = () => {
+    navigate('/like');
+  };
+
+  const handleCart = () => {
+    navigate('/cart');
+  };
+
+  const handleMy = () => {
+    navigate('/account');
+  };
+
+  const handleMain = () => {
+    navigate('/');
+  };
 
   return (
     <>
@@ -95,7 +125,7 @@ const Navbar = () => {
               )}
             </div>
             <div className='navbar-logo-container'>
-              <img src='/images/logo.png' alt='logo' className='navbar-logo-image' />
+              <img src='/images/logo.png' alt='logo' className='navbar-logo-image pointer' onClick={handleMain} />
             </div>
           </div>
 
@@ -115,20 +145,33 @@ const Navbar = () => {
               )}
             </div>
             <div className='navbar-icons'>
+              {user && user.level === 'admin' && (
+                <div className='navbar-icon-item'>
+                  <FiPower />
+                  ADMIN
+                </div>
+              )}
               <div className='search-mobile-view' onClick={handleSearchIconClick}>
                 <FiSearch />
                 SEARCH
               </div>
-              <div className='navbar-icon-item'>
+              <div className='navbar-icon-item' onClick={handleLike}>
                 <FiHeart /> LIKE
               </div>
-              <div className='navbar-icon-item'>
-                <FiLogIn /> LOGIN
-              </div>
-              <div className='navbar-icon-item'>
+              {user ? (
+                <div className='navbar-icon-item' onClick={handleLogout}>
+                  <FiLogIn /> LOGOUT
+                </div>
+              ) : (
+                <div className='navbar-icon-item' onClick={handleLogin}>
+                  <FiLogIn /> LOGIN
+                </div>
+              )}
+
+              <div className='navbar-icon-item' onClick={handleMy}>
                 <FiUser /> MY
               </div>
-              <div className='navbar-icon-item'>
+              <div className='navbar-icon-item' onClick={handleCart}>
                 <FiShoppingBag /> 0
               </div>
             </div>

@@ -179,7 +179,7 @@ const SignupPage = () => {
                   <option value='hanmail.net'>hanmail.net</option>
                   <option value='nate.com'>nate.com</option>
                   <option value='daum.net'>daum.net</option>
-                  <option value='직접입력'>직접입력</option>
+                  <option value=''>직접입력</option>
                 </select>
                 {errors.emailId && <span className='warning'>{errors.emailId}</span>}
                 {errors.emailDomain && <span className='warning'>{errors.emailDomain}</span>}
