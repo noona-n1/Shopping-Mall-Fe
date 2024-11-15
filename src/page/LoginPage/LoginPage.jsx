@@ -4,7 +4,7 @@ import './style/LoginPage.style.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {loginWithEmail, loginWithGoogle} from '../../features/user/userSlice';
-import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from '@react-oauth/google';
+import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
 import {clearErrors} from '../../features/user/userSlice';
 
 const LoginPage = () => {
@@ -15,6 +15,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [rememberEmail, setRememberEmail] = useState(false);
   const [error, setError] = useState('');
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
@@ -72,21 +73,10 @@ const LoginPage = () => {
     dispatch(loginWithEmail({email, password}));
   };
 
-  const handleGoogleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      const {credential} = tokenResponse;
-      if (credential) {
-        dispatch(loginWithGoogle(credential)).then((result) => {
-          if (result.meta.requestStatus === 'fulfilled') {
-            navigate('/');
-          }
-        });
-      }
-    },
-    onError: () => {
-      console.error('Google Login Failed');
-    }
-  });
+  const handleGoogleLogin = async (googleData) => {
+    //구글 로그인 하기
+    dispatch(loginWithGoogle(googleData.credential));
+  };
 
   return (
     <>
@@ -158,9 +148,14 @@ const LoginPage = () => {
               <button className='sns-signup'>카카오로 시작하기</button>
 
               <div className='sosial-flex'>
-                <div className='google-login-icon' onClick={handleGoogleLogin}>
-                  <img src='/images/ico_sm_google.svg' alt='Google Login Icon' />
-                </div>
+                <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                  <GoogleLogin
+                    onSuccess={handleGoogleLogin}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                  />
+                </GoogleOAuthProvider>
               </div>
             </div>
           </div>

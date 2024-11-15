@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_APP_API_BASE_URL}api`,
+  baseURL:
+    import.meta.env.MODE === 'localhost'
+      ? 'http://localhost:5001/api' // 로컬 개발 환경
+      : `${import.meta.env.VITE_APP_API_BASE_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
     authorization: `Bearer ${sessionStorage.getItem('token')}`
