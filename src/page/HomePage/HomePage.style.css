@@ -1,0 +1,120 @@
+.banner-strip-container {
+    width: 100%;
+    height: 120px;
+    margin: 100px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.banner-half {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-half:first-child {
+    background-color: #e4e4e4;
+}
+
+.banner-half:last-child {
+    background-color: #738994;
+}
+
+.banner-image {
+    height: 120px;
+    width: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.banner-text {
+    position: absolute;
+    left: 100px;
+    z-index: 2;
+    text-align: left;
+}
+
+.banner-half:first-child .banner-text {
+    color: #333;
+}
+
+.banner-half:last-child .banner-text {
+    color: white;
+}
+
+.banner-title {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.banner-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (max-width: 1200px) {
+    .banner-strip-container {
+        height: 140px;
+    }
+
+    .banner-half {
+        height: 100%;
+    }
+
+    .banner-image {
+        height: 110px;
+    }
+
+    .banner-text {
+        left: 40px;
+    }
+
+    .banner-title {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+
+    .banner-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-strip-container {
+        height: 140px;
+        flex-direction: column;
+        margin: 40px 0;
+    }
+
+    .banner-half {
+        width: 100%;
+        height: 100%;
+    }
+
+    .banner-image {
+        height: 130px;
+        width: 100%;
+    }
+
+    .banner-text {
+        left: 20px;
+        bottom: 10px;
+    }
+
+    .banner-title {
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+    }
+
+    .banner-subtitle {
+        font-size: 0.8rem;
+    }
+}
