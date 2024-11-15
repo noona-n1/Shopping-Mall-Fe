@@ -12,6 +12,23 @@ const LoginPage = () => {
   const {user, loginError} = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberEmail, setRememberEmail] = useState(false);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberEmail(true);
+    }
+  }, []);
+
+  const handleRememberEmailChange = (e) => {
+    setRememberEmail(e.target.checked);
+    if (!e.target.checked) {
+      localStorage.removeItem('savedEmail');
+      setEmail('');
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -27,6 +44,9 @@ const LoginPage = () => {
 
   const handleLoginWithEmail = (e) => {
     e.preventDefault();
+    if (rememberEmail) {
+      localStorage.setItem('savedEmail', email);
+    }
     dispatch(loginWithEmail({email, password}));
   };
 
@@ -61,7 +81,8 @@ const LoginPage = () => {
                   <input
                     type='text'
                     className='form-control'
-                    placeholder='이메일 입력'
+                    placeholder='이메일아이디를 @까지 정확하게 입력해주세요'
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </p>
@@ -70,7 +91,7 @@ const LoginPage = () => {
                   <input
                     type='password'
                     className='form-control'
-                    placeholder='비밀번호 입력'
+                    placeholder='영문+숫자 조합 8~16자리를 입력해주세요'
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </p>
@@ -83,7 +104,7 @@ const LoginPage = () => {
             </div>
             <div className='login-option'>
               <label class='custom-checkbox'>
-                <input type='checkbox' />
+                <input type='checkbox' checked={rememberEmail} onChange={handleRememberEmailChange} />
                 <span class='checkmark' />
                 이메일 저장
               </label>
