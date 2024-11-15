@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29">
+    <g transform="translate(.5 .5)">
+        <circle data-name="Ellipse 1 copy 4" cx="14" cy="14" r="14" style="stroke:#ddd;fill:#fff"/>
+        <path d="M7.546 24.038a4.644 4.644 0 0 1 0-9.288 4.486 4.486 0 0 1 3.109 1.21L9.4 17.181a2.635 2.635 0 0 0-1.85-.715 2.925 2.925 0 0 0 0 5.85 2.517 2.517 0 0 0 2.625-2H7.546v-1.6h4.378A4.09 4.09 0 0 1 12 19.5a4.284 4.284 0 0 1-4.449 4.539zm8.622-3.978v1.33h-1.33v-1.33h-1.33v-1.33h1.33V17.4h1.33v1.33h1.318v1.33z" transform="translate(3.733 -5.462)" style="fill:#fff"/>
+    </g>
+    <path d="M15.52 8.753a7.8 7.8 0 0 0-.12-1.389H9v2.627h3.655A3.124 3.124 0 0 1 11.3 12.04v1.7h2.195a6.624 6.624 0 0 0 2.025-4.987z" transform="translate(5.494 5.907)" style="fill-rule:evenodd;fill:#4285f4"/>
+    <path data-name="Shape" d="M7.026 16.211a6.484 6.484 0 0 0 4.495-1.645l-2.195-1.7a4.1 4.1 0 0 1-6.1-2.152H.957v1.76a6.789 6.789 0 0 0 6.069 3.741z" transform="translate(7.468 5.086)" style="fill:#34a853;fill-rule:evenodd"/>
+    <path data-name="Shape" d="M2.991 9.3a4.015 4.015 0 0 1 0-2.581V4.958H.722a6.8 6.8 0 0 0 0 6.1L2.991 9.3z" transform="translate(7.703 6.497)" style="fill:#fbbc05;fill-rule:evenodd"/>
+    <path data-name="Shape" d="M7.026 2.7a3.669 3.669 0 0 1 2.6 1.016l1.944-1.947A6.527 6.527 0 0 0 7.026 0 6.789 6.789 0 0 0 .957 3.741L3.226 5.5a4.047 4.047 0 0 1 3.8-2.8z" transform="translate(7.468 7.714)" style="fill:#ea4335;fill-rule:evenodd"/>
+    <path data-name="Shape" d="M0 0h13.583v13.583H0z" transform="translate(7.703 7.714)" style="fill:none;fill-rule:evenodd"/>
+</svg>

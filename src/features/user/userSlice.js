@@ -29,12 +29,28 @@ export const loginWithEmail = createAsyncThunk(
   }
 );
 
-export const loginWithToken = createAsyncThunk('user/loginWithToken', async (_, {rejectWithValue}) => {
+export const loginWithGoogle = createAsyncThunk('user/loginWithGoogle', async (token, {rejectWithValue}) => {
   try {
-    const response = await api.get('/user/me');
+    const response = await api.post('auth/google', {token});
+    sessionStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error) {
-    rejectWithValue(error.response?.data || 'An error occurred');
+    return rejectWithValue(error.response?.data || 'Google login failed');
+  }
+});
+
+export const loginWithToken = createAsyncThunk('user/loginWithToken', async (_, {rejectWithValue}) => {
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    return rejectWithValue('No token found, skipping request');
+  }
+
+  try {
+    const response = await api.get('/user/me');
+
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data || 'An error occurred');
   }
 });
 
@@ -88,12 +104,28 @@ const userSlice = createSlice({
         state.loading = false;
         state.loginError = action.payload;
       })
+      .addCase(loginWithToken.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(loginWithToken.fulfilled, (state, action) => {
         state.user = action.payload.user;
       })
       .addCase(loginWithToken.rejected, (state, action) => {
+        state.loading = false;
         state.user = null;
-        state.error = action.payload;
+        state.loginError = action.payload || 'Unable to retrieve user data';
+      })
+      .addCase(loginWithGoogle.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.loginError = null;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.loginError = action.payload;
       });
   }
 });

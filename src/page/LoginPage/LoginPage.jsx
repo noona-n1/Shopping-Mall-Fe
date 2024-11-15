@@ -3,7 +3,8 @@ import '../../App.css';
 import './style/LoginPage.style.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {loginWithEmail} from '../../features/user/userSlice';
+import {loginWithEmail, loginWithGoogle} from '../../features/user/userSlice';
+import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from '@react-oauth/google';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,22 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(loginWithEmail({email, password}));
   };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const {credential} = tokenResponse;
+      if (credential) {
+        dispatch(loginWithGoogle(credential)).then((result) => {
+          if (result.meta.requestStatus === 'fulfilled') {
+            navigate('/');
+          }
+        });
+      }
+    },
+    onError: () => {
+      console.error('Google Login Failed');
+    }
+  });
 
   return (
     <>
@@ -89,8 +106,17 @@ const LoginPage = () => {
             <button className='email-signup'>이메일로 가입하기</button>
           </div>
           <div className='join-sns'>
-            <div className='sns-content'>SNS계정으로 of you를 이용해보세요</div>
-            <button className='sns-signup'>카카오로 시작하기</button>
+            <div className='sns-content'>SNS계정으로 OF YOU를 이용해보세요</div>
+
+            <div className='sns-buttons'>
+              <button className='sns-signup'>카카오로 시작하기</button>
+
+              <div className='sosial-flex'>
+                <div className='google-login-icon' onClick={handleGoogleLogin}>
+                  <img src='/images/ico_sm_google.svg' alt='Google Login Icon' />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
