@@ -95,13 +95,13 @@
     }
 
     .banner-half {
-        width: 100%;
+        width: 120%;
         height: 100%;
     }
 
     .banner-image {
-        height: 130px;
-        width: 100%;
+        height: 100px;
+        width: 400px;
     }
 
     .banner-text {
@@ -116,5 +116,19 @@
 
     .banner-subtitle {
         font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .banner-image {
+        height: 90px;
+        width: 350px;
+    }
+
+
+    .banner-half {
+        width: 110%;
+        height: 100%;
     }
 }
