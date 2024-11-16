@@ -12,31 +12,33 @@ const ProductCard = ({ image, title, price, originalPrice, discount }) => {
 
     return (
         <div className="homepage-product-card">
-            <div className="homepage-product-image-container">
-                <img src={image} alt={title} className="homepage-product-image" />
-                <button
-                    className="homepage-product-like-button"
-                    onClick={handleLikeClick}
-                    aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
-                >
-                    {isLiked ? (
-                        <IoHeart className="like-icon like-icon-filled" />
-                    ) : (
-                        <IoHeartOutline className="like-icon" />
-                    )}
-                </button>
+            <div className="homepage-product-image-wrapper">
+                <div className="homepage-product-image-container">
+                    <img src={image} alt={title} className="homepage-product-image" />
+                    <button
+                        className="homepage-product-like-button"
+                        onClick={handleLikeClick}
+                        aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
+                    >
+                        {isLiked ? (
+                            <IoHeart className="like-icon like-icon-filled" />
+                        ) : (
+                            <IoHeartOutline className="like-icon" />
+                        )}
+                    </button>
+                </div>
             </div>
             <div className="homepage-product-info">
                 <h3 className="homepage-product-title">{title}</h3>
-                <p className="homepage-product-price">
+                <div className="homepage-product-price">
                     <span className="homepage-current-price">{price.toLocaleString()}원</span>
                     {originalPrice && (
-                        <>
+                        <div className="homepage-price-discount">
                             <span className="homepage-original-price">{originalPrice.toLocaleString()}원</span>
                             <span className="homepage-discount">-{discount}%</span>
-                        </>
+                        </div>
                     )}
-                </p>
+                </div>
             </div>
         </div>
     );

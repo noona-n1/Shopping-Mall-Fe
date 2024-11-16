@@ -1,19 +1,23 @@
 .homepage-product-card {
     position: relative;
     cursor: pointer;
-    flex: 0 0 auto;
-    width: 200px;
+    width: 100%;
+    min-width: 250px;
     margin-right: 20px;
 }
 
 .homepage-product-image-container {
     position: relative;
-    width: 250px;
-    height: 330px;
+    width: 100%;
+    padding-bottom: 132%;
+    /* 250:330 비율 유지 */
     overflow: hidden;
 }
 
 .homepage-product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -36,6 +40,7 @@
     cursor: pointer;
     padding: 0;
     transition: all 0.2s ease-in-out;
+    z-index: 1;
 }
 
 .homepage-product-like-button:hover {
@@ -62,11 +67,15 @@
     margin-bottom: 6px;
     font-weight: 400;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .homepage-product-price {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -92,11 +101,23 @@
     .homepage-product-card {
         min-width: 180px;
     }
+
+    .homepage-product-title {
+        font-size: 14px;
+    }
+
+    .homepage-current-price {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 1280px) {
     .homepage-product-card {
         min-width: 160px;
+    }
+
+    .like-icon {
+        font-size: 1.6rem;
     }
 }
 
@@ -110,15 +131,23 @@
         height: 32px;
     }
 
-    .like-icon {
-        font-size: 18px;
+    .homepage-product-title {
+        font-size: 13px;
+    }
+
+    .homepage-current-price {
+        font-size: 15px;
+    }
+
+    .homepage-original-price,
+    .homepage-discount {
+        font-size: 13px;
     }
 }
 
 @media (max-width: 768px) {
     .homepage-product-card {
         min-width: 140px;
-        flex: 0 0 140px;
     }
 
     .homepage-product-like-button {
@@ -126,7 +155,25 @@
         height: 28px;
     }
 
-    .like-icon {
-        font-size: 16px;
+    .homepage-product-info {
+        padding: 12px 0;
+    }
+
+    .homepage-product-title {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .homepage-current-price {
+        font-size: 14px;
+    }
+
+    .homepage-original-price,
+    .homepage-discount {
+        font-size: 12px;
+    }
+
+    .homepage-product-price {
+        gap: 6px;
     }
 }
