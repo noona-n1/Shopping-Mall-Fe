@@ -1,5 +1,5 @@
 .homepage-category-section {
-    padding: 40px;
+    padding: 40px 10px 40px 0;
     max-width: 1400px;
     margin: 0 auto;
     overflow: hidden;
@@ -43,7 +43,7 @@
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding: 0 0px;
+    padding: 0;
 }
 
 .homepage-product-list:active {
@@ -82,7 +82,7 @@
 
 @media (max-width: 1200px) {
     .homepage-product-list {
-        padding: 0 40px;
+        padding: 0 40px 0 0;
     }
 }
 
