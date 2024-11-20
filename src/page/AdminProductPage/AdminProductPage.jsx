@@ -3,7 +3,8 @@ import {useSearchParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import {fetchProducts, deleteProduct} from '../../features/product/productSlice';
-import NewItemDialog from './component/NewItemDialog';
+// import NewItemDialog from './component/NewItemDialog';
+import './AdminProductPage.style.css';
 
 const AdminProductPage = () => {
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ const AdminProductPage = () => {
         />
       </div>
 
-      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} />
+      {/* <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} /> */}
     </div>
   );
 };
