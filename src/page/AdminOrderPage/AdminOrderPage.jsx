@@ -1,5 +1,129 @@
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getOrderList, updateOrderStatus} from '../../features/order/orderSlice';
+import OrderDetailDialog from './component/OrderDetailDialog'; // 다이얼로그 컴포넌트 추가
+import './adminOrder.style.css'; // CSS 파일 추가
+import ReactPaginate from 'react-paginate';
+
 const AdminOrderPage = () => {
-  return <div>AdminOrderPage</div>;
+  const dispatch = useDispatch();
+  const {orders, status, error, totalPageNum} = useSelector((state) => state.order); // totalPageNum 추가
+  const [searchQuery, setSearchQuery] = useState({
+    page: 1,
+    limit: 10,
+    ordernum: ''
+  });
+
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handlePageClick = ({selected}) => {
+    setSearchQuery({...searchQuery, page: selected + 1});
+  };
+
+  useEffect(() => {
+    dispatch(getOrderList(searchQuery)); // searchQuery 사용
+  }, [dispatch, searchQuery]); // searchQuery 의존성 추가
+
+  const handleSearchChange = (e) => {
+    setSearchQuery({...searchQuery, ordernum: e.target.value});
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setSearchQuery({...searchQuery, page: 1});
+  };
+
+  const openDetailDialog = (order) => {
+    setSelectedOrder(order);
+    setOpenDialog(true);
+  };
+
+  const closeDetailDialog = () => {
+    setOpenDialog(false);
+    setSelectedOrder(null);
+  };
+
+  const handleStatusChange = (orderId, newStatus) => {
+    dispatch(updateOrderStatus({orderId, newStatus})); // 상태 업데이트
+  };
+  console.log(orders);
+
+  return (
+    <div className='admin-order-page admin-order-section'>
+      <div className='admin-order-header'>
+        <h1>주문 관리</h1>
+
+        <form onSubmit={handleSearchSubmit}>
+          <input
+            type='text'
+            placeholder='주문 번호로 검색'
+            value={searchQuery.ordernum}
+            onChange={handleSearchChange}
+          />
+          <button type='submit'>검색</button>
+        </form>
+      </div>
+      {status === 'loading' && <p>로딩 중...</p>}
+      {status === 'failed' && <p>오류 발생: {error}</p>}
+
+      {status === 'succeeded' && (
+        <table className='product-table admin-order-table'>
+          <thead>
+            <tr>
+              <th>주문 번호</th>
+              <th>고객 이름</th>
+              <th>주문 날짜</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id} onClick={() => openDetailDialog(order)}>
+                <td>{order.orderNum}</td>
+                <td>{order.userId.email}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                <td>{order.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {/* 페이지네이션 */}
+      <ReactPaginate
+        nextLabel='next >'
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={totalPageNum} // 슬라이스에서 받아온 총 페이지 수
+        forcePage={searchQuery.page - 1}
+        previousLabel='< previous'
+        renderOnZeroPageCount={null}
+        pageClassName='page-item'
+        pageLinkClassName='page-link'
+        previousClassName='page-item'
+        previousLinkClassName='page-link'
+        nextClassName='page-item'
+        nextLinkClassName='page-link'
+        breakLabel='...'
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
+        containerClassName='pagination'
+        activeClassName='active'
+        className='display-center list-style-none'
+      />
+
+      {/* 주문 상세 다이얼로그 */}
+      {openDialog && (
+        <OrderDetailDialog
+          open={openDialog}
+          handleClose={closeDetailDialog}
+          order={selectedOrder}
+          handleStatusChange={handleStatusChange} // 상태 변경 메서드 전달
+        />
+      )}
+    </div>
+  );
 };
 
 export default AdminOrderPage;

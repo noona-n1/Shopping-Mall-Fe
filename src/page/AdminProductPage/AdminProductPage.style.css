@@ -50,10 +50,17 @@
   border-radius: 4px;
 }
 
+.admin-order-header {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
 .product-table {
   width: 90%;
   border-collapse: collapse;
-  margin: 250px auto 40px auto;
+  margin: 40px auto 40px auto;
 }
 
 .product-table th,
