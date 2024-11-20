@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakao Redirect</title>
+</head>
+<body>
+    <script>
+        const handleKakaoCallback = () => {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code'); // 카카오에서 전달된 인증 코드
+
+            if (code) {
+                // 부모 창으로 인증 코드 전달
+                window.opener.postMessage({ type: 'KAKAO_AUTH_SUCCESS', code }, '*');
+                window.close(); // 팝업 창 닫기
+            } else {
+                console.error('카카오 인증 코드가 없습니다.');
+                window.close(); // 팝업 창 닫기
+            }
+        };
+
+        // 리다이렉트 URI에 도달했을 때 실행
+        handleKakaoCallback();
+    </script>
+</body>
+</html>

@@ -3,11 +3,12 @@ import '../../App.css';
 import './style/LoginPage.style.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import {loginWithEmail, loginWithGoogle} from '../../features/user/userSlice';
+import {loginWithEmail, loginWithGoogle, fetchKakaoToken} from '../../features/user/userSlice';
 import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
 import {clearErrors} from '../../features/user/userSlice';
 import {getLikeList} from '../../features/like/likeSlice';
 import {getCartQty} from '../../features/cart/cartSlice';
+import KakaoLoginButton from './KakaoLoginButton';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -155,7 +156,7 @@ const LoginPage = () => {
             <div className='sns-content'>SNS계정으로 OF YOU를 이용해보세요</div>
 
             <div className='sns-buttons'>
-              <button className='sns-signup'>카카오로 시작하기</button>
+              <KakaoLoginButton />
 
               <div className='sosial-flex'>
                 <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>

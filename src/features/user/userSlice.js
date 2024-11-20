@@ -39,6 +39,17 @@ export const loginWithGoogle = createAsyncThunk('user/loginWithGoogle', async (t
   }
 });
 
+export const fetchKakaoToken = createAsyncThunk('user/fetchKakaoToken', async (_, thunkAPI) => {
+  try {
+    const response = await fetch('/api/auth/kakao/callback'); // 서버 API 호출
+    const data = await response.json();
+    return data.token; // 액세스 토큰 반환
+  } catch (error) {
+    console.error('로그인 후 처리 중 오류 발생:', error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
 export const loginWithToken = createAsyncThunk('user/loginWithToken', async (_, {rejectWithValue}) => {
   const token = sessionStorage.getItem('token');
   if (!token) {
@@ -66,7 +77,9 @@ const userSlice = createSlice({
     loading: false,
     loginError: null,
     registrationError: null,
-    success: false
+    success: false,
+    token: null,
+    status: 'idle'
   },
   reducers: {
     clearErrors: (state) => {
@@ -120,6 +133,18 @@ const userSlice = createSlice({
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
         state.loginError = action.payload;
+      })
+      .addCase(fetchKakaoToken.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchKakaoToken.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.token = action.payload; // 액세스 토큰 저장
+        localStorage.setItem('token', action.payload); // 토큰을 로컬 스토리지에 저장
+      })
+      .addCase(fetchKakaoToken.rejected, (state, action) => {
+        state.status = 'failed';
+        state.loginError = action.payload; // 에러 메시지 저장
       });
   }
 });
