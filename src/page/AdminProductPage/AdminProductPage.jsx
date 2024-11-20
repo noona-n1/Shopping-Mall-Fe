@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useSearchParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import './AdminProductPage.style.css';
 import {fetchProducts, deleteProduct} from '../../features/product/productSlice';
+import NewItemDialog from './component/NewItemDialog';
 
 const AdminProductPage = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const AdminProductPage = () => {
   };
 
   return (
-    <div className='admin-product-page'>
+    <div className='admin-product-page admin-order-section'>
       <div className='product-content'>
         <div className='product-header'>
           <div className='search-box'>
@@ -144,6 +144,8 @@ const AdminProductPage = () => {
           className='display-center list-style-none'
         />
       </div>
+
+      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} />
     </div>
   );
 };

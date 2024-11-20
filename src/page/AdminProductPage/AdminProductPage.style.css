@@ -1,3 +1,9 @@
+.admin-order-section {
+  width: 100%;
+  margin: 20px auto;
+  padding-top: 230px;
+}
+
 .product-page {
   padding: 20px;
   max-width: 1200px;
@@ -9,6 +15,8 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  width: 50%;
+  margin: 20px auto 20px auto;
 }
 
 .search-box {
