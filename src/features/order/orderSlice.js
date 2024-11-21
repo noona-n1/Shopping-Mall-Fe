@@ -95,6 +95,7 @@ const orderSlice = createSlice({
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {
         state.status = 'failed';
+
         state.error = action.payload;
       });
   }

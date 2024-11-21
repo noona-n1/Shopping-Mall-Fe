@@ -11,18 +11,15 @@ const initialState = {
 };
 
 // Async thunk actions
-export const addToCart = createAsyncThunk(
-  'cart/addToCart',
-  async ({productId, size, qty}, {rejectWithValue, dispatch}) => {
-    try {
-      const response = await api.post('/cart', {productId, size, qty});
-      dispatch(getCartQty());
-      return response.data; // 서버로부터 성공적인 응답 처리
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to add item to cart.');
-    }
+export const addToCart = createAsyncThunk('cart/addToCart', async ({cartItems}, {rejectWithValue, dispatch}) => {
+  try {
+    const response = await api.post('/cart', {cartItems});
+    dispatch(getCartQty());
+    return response.data; // 서버로부터 성공적인 응답 처리
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || 'Failed to add item to cart.');
   }
-);
+});
 
 export const getCartList = createAsyncThunk('cart/getCartList', async (_, {rejectWithValue, dispatch}) => {
   try {

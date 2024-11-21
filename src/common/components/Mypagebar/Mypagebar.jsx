@@ -44,8 +44,8 @@ const Mypagebar = () => {
           <h3 className="mypage-section-title">정보관리</h3>
           <ul>
             <li>
-              <Link to="/mypage/edit"
-                className={location.pathname === '/mypage/edit' ? 'active' : ''}>
+              <Link to="/mypage/profile"
+                className={location.pathname === '/mypage/profile' ? 'active' : ''}>
                 회원정보
               </Link>
             </li>

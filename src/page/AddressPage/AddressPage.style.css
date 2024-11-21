@@ -1,0 +1,505 @@
+.address-page-container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.address-page-title {
+    font-size: 24px;
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000;
+}
+
+/* 배송지 아이템 스타일 */
+.address-page-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.address-page-item-info {
+    flex: 1;
+}
+
+.address-page-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.address-page-item-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.address-page-item-badge {
+    background-color: #e74c3c;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.address-page-item-address {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.address-page-item-phone {
+    font-size: 14px;
+    color: #666;
+}
+
+.address-page-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* 버튼 스타일 */
+.address-page-edit-btn,
+.address-page-delete-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.address-page-edit-btn {
+    background-color: white;
+    border: 1px solid #666;
+    color: #666;
+}
+
+.address-page-delete-btn {
+    background-color: white;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+.address-page-add-wrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.address-page-add-btn {
+    padding: 12px 24px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* 모달 스타일 */
+.address-page-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.address-page-modal,
+.address-page-postcode-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.address-page-postcode-modal {
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.address-page-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.address-page-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.address-page-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* 폼 스타일 */
+.address-page-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.address-page-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.address-page-form-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+}
+
+.address-page-required {
+    color: #e74c3c;
+    margin-left: 4px;
+}
+
+.address-page-input {
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.address-page-input:focus {
+    border-color: #333;
+    outline: none;
+}
+
+.address-page-address-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.address-page-postcode-row {
+    display: flex;
+    gap: 8px;
+}
+
+.address-page-postcode {
+    width: 140px;
+}
+
+.address-page-postcode-btn {
+    min-width: 120px;
+    height: 44px;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.address-page-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin: 0;
+    padding-left: 0;
+}
+
+.address-page-checkbox input[type="checkbox"] {
+    margin: 0;
+}
+
+
+
+.address-page-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.address-page-cancel-btn,
+.address-page-submit-btn {
+    padding: 12px 40px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.address-page-cancel-btn {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+.address-page-submit-btn {
+    background-color: #000;
+    border: none;
+    color: white;
+}
+
+.address-page-checkbox span {
+    font-size: 15px;
+    color: #333;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1200px) {
+    .address-page-container {
+        max-width: 720px;
+    }
+}
+
+@media (max-width: 768px) {
+    .address-page-container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .address-page-title {
+        font-size: 20px;
+    }
+
+    .address-page-item {
+        padding: 15px 0;
+    }
+
+    .address-page-item-name {
+        font-size: 15px;
+    }
+
+    .address-page-item-address {
+        font-size: 14px;
+    }
+
+    .address-page-item-phone {
+        font-size: 13px;
+    }
+
+    .address-page-modal,
+    .address-page-postcode-modal {
+        width: 95%;
+        padding: 24px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .address-page-modal-close {
+        font-size: 20px;
+        top: 20px;
+        right: 20px;
+    }
+
+    .address-page-modal-title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .address-page-postcode {
+        width: 100px;
+    }
+
+    .address-page-postcode-btn {
+        min-width: 100px;
+        font-size: 13px;
+    }
+
+    .address-page-form-label {
+        font-size: 14px;
+    }
+
+    .address-page-input {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .address-page-cancel-btn,
+    .address-page-submit-btn {
+        padding: 10px 30px;
+        font-size: 14px;
+    }
+
+    .address-page-checkbox span {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .address-page-container {
+        padding: 0 16px;
+    }
+
+    .address-page-item {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .address-page-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .address-page-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .address-page-item-badge {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .address-page-edit-btn,
+    .address-page-delete-btn {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .address-page-postcode-modal {
+        height: 80vh;
+        max-height: none;
+        width: 100%;
+        margin: 0 10px;
+    }
+
+    .address-page-add-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .address-page-modal-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .address-page-cancel-btn,
+    .address-page-submit-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .address-page-form {
+        gap: 16px;
+    }
+
+    .address-page-address-wrapper {
+        gap: 6px;
+    }
+
+    .address-page-postcode-row {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .address-page-postcode,
+    .address-page-postcode-btn {
+        width: 100%;
+    }
+
+    .address-page-modal,
+    .address-page-postcode-modal {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    .address-page-modal-overlay {
+        align-items: flex-end;
+    }
+
+    .address-page-postcode-modal {
+        margin: 0;
+    }
+
+    .address-page-modal-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 10;
+        padding-bottom: 12px;
+        margin-bottom: 16px;
+    }
+
+    .address-page-modal-close {
+        padding: 10px;
+    }
+
+    .address-page-postcode-modal {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .address-page-postcode-modal .address-page-modal-header {
+        flex-shrink: 0;
+    }
+
+    .address-page-postcode-modal>div:last-child {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .address-page-checkbox span {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .address-page-container {
+        padding: 0 12px;
+    }
+
+    .address-page-title {
+        font-size: 18px;
+    }
+
+    .address-page-item-name {
+        font-size: 14px;
+    }
+
+    .address-page-item-address,
+    .address-page-item-phone {
+        font-size: 12px;
+    }
+
+    .address-page-modal,
+    .address-page-postcode-modal {
+        padding: 16px;
+    }
+
+    .address-page-modal-title {
+        font-size: 16px;
+    }
+
+    .address-page-modal-close {
+        font-size: 18px;
+    }
+
+    .address-page-checkbox span {
+        font-size: 14px;
+    }
+}

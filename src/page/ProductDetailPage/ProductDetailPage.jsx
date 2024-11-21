@@ -50,6 +50,7 @@ const ProductDetailPage = () => {
     }
     setSizeError(false);
     setSelectedOptions((prev) => [...prev, {option, quantity: 1}]);
+    console.log(selectedOptions);
     setIsOptionOpen(false);
   };
 
@@ -78,34 +79,39 @@ const ProductDetailPage = () => {
     navigate('/payment', {state: {items: orderItems, totalPrice}});
   };
 
-  const addItemToCart = async () => {
+  const addItemToCart = () => {
     if (selectedOptions.length === 0) {
       setSizeError(true);
       return;
     }
+
     if (!user) {
       navigate('/login');
       return;
     }
 
-    for (const option of selectedOptions) {
-      try {
-        console.log('요청 정보:', option);
-        await dispatch(
-          addToCart({
-            productId: id, // 상품 ID
-            size: option.option, // 선택된 옵션
-            qty: option.quantity // 수량
-          })
-        ).unwrap();
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-        alert(`옵션 ${option.option} 추가에 실패했습니다.`);
-      }
-    }
+    // 선택된 옵션 배열 생성
+    const cartItems = selectedOptions.map((option) => ({
+      productId: id, // 상품 ID
+      size: option.option, // 선택된 옵션
+      qty: option.quantity // 수량
+    }));
 
-    alert('모든 옵션이 장바구니에 추가되었습니다.');
+    console.log('요청 정보 (cartItems):', {cartItems});
+    console.log('Array 여부 확인:', Array.isArray(cartItems));
+
+    // Redux Thunk 호출: cartItems 배열 전송
+    dispatch(addToCart({cartItems}))
+      .unwrap()
+      .then(() => {
+        alert('선택된 옵션들이 장바구니에 추가되었습니다.');
+      })
+      .catch((error) => {
+        console.error('장바구니 추가 실패:', error);
+        alert('장바구니 추가 중 문제가 발생했습니다.');
+      });
   };
+
   return (
     <div className='product-detail-page'>
       <div className='product-detail-page__left'>
