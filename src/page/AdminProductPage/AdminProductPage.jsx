@@ -68,7 +68,7 @@ const AdminProductPage = () => {
 
 
   return (
-    <div className='admin-product-page'>
+    <div className='banner-section'>
       <div className='product-content'>
         <div className='product-header'>
           <div className='search-box'>
@@ -88,12 +88,14 @@ const AdminProductPage = () => {
             </div>
           </div>
         </div>
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
+        
           <table className='product-table'>
+          {loading ? (
+          <div>Loding...</div>
+        ) : ( 
+          <>
             <thead>
-            <tr>
+              <tr>
               {tableHeader.map((header, index) => (
                 <th key={index}>{header}</th>
               ))}
@@ -124,8 +126,9 @@ const AdminProductPage = () => {
               </tr>
             ))}
             </tbody>
-          </table>
+          </>
         )}
+        </table>
 
         <ReactPaginate
           nextLabel='next >'
