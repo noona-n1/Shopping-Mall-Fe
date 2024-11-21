@@ -5,37 +5,54 @@ import {getCartQty} from '../cart/cartSlice';
 // 비동기 주문 생성 액션
 export const createOrder = createAsyncThunk('order/createOrder', async (orderData, {rejectWithValue, dispatch}) => {
   try {
-    const response = await api.post('/order', orderData); // 주문 API 호출
+    const response = await api.post('/order', orderData);
     dispatch(getCartQty());
 
-    return response.data; // 성공 시 데이터 반환
-  } catch (error) {
-    // 실패 시 에러 메시지 반환
-    return rejectWithValue(error.response?.data?.message || error.message);
-  }
-});
-
-export const fetchOrder = createAsyncThunk('/order/fetchOrder', async (_, {rejectWithValue}) => {
-  try {
-    const response = await api.get('/order');
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || error.message);
   }
 });
 
-// 주문 관련 슬라이스
+export const getOrderList = createAsyncThunk('order/getOrderList', async (query, {rejectWithValue}) => {
+  try {
+    const response = await api.get('/order/admin', {params: {...query}});
+    return {
+      orders: response.data.orders,
+      totalPageNum: response.data.totalPageNum,
+      totalCount: response.data.totalCount
+    };
+  } catch (e) {
+    return rejectWithValue(e.message);
+  }
+});
+
+export const updateOrderStatus = createAsyncThunk(
+  'order/updateStatus',
+  async ({orderId, status}, {rejectWithValue}) => {
+    try {
+      const response = await axios.put(`/api/orders/${orderId}`, {status});
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const orderSlice = createSlice({
   name: 'order',
   initialState: {
-    orderList: [],
-    order: null, // 주문 데이터
-    loading: false,
-    error: null // 에러 메시지
+    order: null,
+    orders: [],
+    totalPageNum: 0,
+    totalCount: 0,
+    status: 'idle',
+    error: null
   },
   reducers: {
     resetOrderState: (state) => {
       state.order = null;
+      state.orders = [];
       state.status = 'idle';
       state.error = null;
     }
@@ -43,27 +60,42 @@ const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
-        state.loading = true;
+        state.status = 'loading';
         state.error = null;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = 'succeeded';
         state.order = action.payload.orderNum;
       })
       .addCase(createOrder.rejected, (state, action) => {
-        state.loading = false;
+        state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(fetchOrder.pending, (state) => {
-        state.loading = true;
+      .addCase(getOrderList.pending, (state) => {
+        state.status = 'loading';
         state.error = null;
       })
-      .addCase(fetchOrder.fulfilled, (state, action) => {
-        state.loading = false;
-        state.orderList = action.payload.orders;
+      .addCase(getOrderList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.orders = action.payload.orders;
+        state.totalPageNum = action.payload.totalPageNum;
+        state.totalCount = action.payload.totalCount;
       })
-      .addCase(fetchOrder.rejected, (state, action) => {
-        state.loading = false;
+      .addCase(getOrderList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const updatedOrder = action.payload;
+        state.orders = state.orders.map((order) => (order._id === updatedOrder._id ? updatedOrder : order));
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        state.status = 'failed';
+
         state.error = action.payload;
       });
   }
