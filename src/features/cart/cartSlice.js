@@ -94,11 +94,12 @@ const cartSlice = createSlice({
 
       state.cartList = cartData;
 
-      // 총 금액 계산
-      state.totalPrice = cartData.reduce(
-        (total, item) => total + item.productId.price * item.qty,
-        0 // 초기값 설정
-      );
+      state.totalPrice = cartData.reduce((total, item) => {
+        if (!item.productId || item.productId.price == null) {
+          return total; // productId나 price가 없으면 무시
+        }
+        return total + item.productId.price * item.qty;
+      }, 0);
     });
     builder.addCase(getCartList.rejected, (state, action) => {
       state.loading = false;
