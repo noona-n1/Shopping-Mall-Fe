@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import ProductCard from '../../common/components/ProductCard/ProductCard';
 import './LikePage.style.css';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,12 +17,11 @@ const LikePage = () => {
     dispatch(getLikeList()); // 좋아요 리스트 호출
   }, [dispatch]);
 
-  // 카테고리별 데이터 필터링
-  const filteredLikes = likes.filter((like) => {
-    if (activeTab === 'All') return true; // 전체 탭
-    return like.productId.category?.includes(activeTab.toLowerCase()); // 해당 카테고리에 속한 아이템만 반환
-  });
-
+  const filteredLikes = useMemo(() => {
+    return likes
+      .filter((like) => like.productId) // productId가 존재하는 항목만 유지
+      .filter((like) => like.productId._id && like.productId.image); // 추가 검증
+  }, [likes, activeTab]);
   // 로딩 또는 에러 처리
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
