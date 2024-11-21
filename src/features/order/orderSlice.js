@@ -24,6 +24,30 @@ export const fetchOrder = createAsyncThunk('/order/fetchOrder', async (_, {rejec
   }
 });
 
+export const getOrderList = createAsyncThunk('order/getOrderList', async (query, {rejectWithValue}) => {
+  try {
+    const response = await api.get('/order/admin', {params: {...query}});
+
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const updateOrderStatus = createAsyncThunk(
+  'order/updateOrder',
+  async ({id, status}, {dispatch, rejectWithValue}) => {
+    try {
+      const response = await api.put(`/order/${id}`, {status});
+
+      dispatch(getOrderList({page: 1, status}));
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 // 주문 관련 슬라이스
 const orderSlice = createSlice({
   name: 'order',

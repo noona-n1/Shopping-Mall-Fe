@@ -49,7 +49,7 @@ const productSlice = createSlice({
     loading: false,
     error: null,
     totalPageNum: 1,
-    totalCount: 0,
+    totalCount: 0
   },
   reducers: {
     clearProducts: (state) => {
@@ -57,6 +57,13 @@ const productSlice = createSlice({
     },
     clearProductDetail: (state) => {
       state.productDetail = null; // 상세 정보 초기화
+    },
+    clearError: (state) => {
+      state.error = '';
+      state.success = false;
+    },
+    setSelectedProduct: (state, action) => {
+      state.selectedProduct = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -105,6 +112,6 @@ const productSlice = createSlice({
   }
 });
 
-export const {clearProducts, clearProductDetail} = productSlice.actions;
+export const {clearProducts, clearProductDetail, clearError, setSelectedProduct} = productSlice.actions;
 
 export default productSlice.reducer;

@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useSearchParams, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import {fetchProducts, deleteProduct} from '../../features/product/productSlice';
-// import NewItemDialog from './component/NewItemDialog';
+import {fetchProducts, deleteProduct, setSelectedProduct} from '../../features/product/productSlice';
+import NewItemDialog from './component/NewItemDialog';
 import './AdminProductPage.style.css';
 
 const AdminProductPage = () => {
@@ -21,6 +21,8 @@ const AdminProductPage = () => {
     name: query.get('name') || '',
     limit: query.get('limit') || 5
   });
+
+  const [keyword, setKeyword] = useState(query.get('name') || '');
 
   const tableHeader = ['#', 'Sku', 'Name', 'Price', 'Stock', 'Image', 'Status', ''];
 
@@ -44,10 +46,6 @@ const AdminProductPage = () => {
     dispatch(fetchProducts({...searchQuery}));
   }, [query, showDialog]);
 
-  useEffect(() => {
-    console.log('AdminProductPage');
-  }, []);
-
   const handleDelete = (id) => {
     const isConfirmed = window.confirm('정말로 삭제하시겠습니까?');
     if (!isConfirmed) {
@@ -63,23 +61,62 @@ const AdminProductPage = () => {
     alert('상품이 삭제되었습니다.');
   };
 
+  const handleClickNewItem = () => {
+    setMode('new');
+    setShowDialog(true);
+  };
+
+  const handleSearchSubmit = () => {
+    setSearchQuery({...searchQuery, name: keyword, page: 1});
+  };
+
+  const handleLimitChange = (event) => {
+    setSearchQuery({
+      ...searchQuery,
+      page: 1,
+      limit: event.target.value
+    });
+  };
+
+  const openEditForm = (product) => {
+    //edit모드로 설정하고
+    // 아이템 수정다이얼로그 열어주기
+    setMode('edit');
+    setShowDialog(true);
+    dispatch(setSelectedProduct(product));
+  };
+
   return (
     <div className='admin-product-page admin-order-section'>
       <div className='product-content'>
         <div className='product-header'>
           <div className='search-box'>
-            <input type='text' id='search-query' placeholder='제품 이름으로 검색' className='search-input' />
+            <input
+              type='text'
+              placeholder='제품 이름으로 검색'
+              className='search-input'
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearchSubmit();
+                }
+              }}
+            />
+            <button className='search-btn'>검색</button>
           </div>
           <div className='header-actions'>
-            <button className='add-new-item-btn' onClick={() => alert('Add New Item')}>
+            <button className='add-new-item-btn' onClick={handleClickNewItem}>
               Add New Item +
             </button>
             <div className='item-count-dropdown'>
-              <select id='items-per-page' onChange={(e) => alert(`Items per page: ${e.target.value}`)}>
+              <select id='items-per-page' onChange={handleLimitChange}>
+                <option value='5'>5</option>
                 <option value='10'>10</option>
                 <option value='20'>20</option>
                 <option value='30'>30</option>
-                <option value='50'>50</option>
               </select>
             </div>
           </div>
@@ -116,7 +153,7 @@ const AdminProductPage = () => {
                     </td>
                     <td>{product.status}</td>
                     <td>
-                      <button onClick={() => alert('Edit')}>Edit</button>
+                      <button onClick={() => openEditForm(product)}>Edit</button>
                       <button onClick={() => handleDelete(product._id)}>Delete</button>
                     </td>
                   </tr>
@@ -149,7 +186,7 @@ const AdminProductPage = () => {
         />
       </div>
 
-      {/* <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} /> */}
+      <NewItemDialog mode={mode} showDialog={showDialog} setShowDialog={setShowDialog} />
     </div>
   );
 };

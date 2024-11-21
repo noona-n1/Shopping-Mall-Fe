@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Form, Modal, Button, Row, Col, Alert} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
-import CloudinaryUploadWidget from '../../../utils/CloudinaryUploadWidget';
-import {CATEGORY, STATUS, SIZE} from '../../../constants/product.constants';
-import {clearError, createProduct, editProduct} from '../../../features/product/productSlice';
+import '../adminProductPage.style.css';
+// import CloudinaryUploadWidget from '../../../utils/CloudinaryUploadWidget';
+// import {CATEGORY, STATUS, SIZE} from '../../../constants/product.constants';
+import {clearError, fetchProducts, updateProduct} from '../../../features/product/productSlice';
 
 const InitialFormData = {
   name: '',
@@ -17,15 +18,30 @@ const InitialFormData = {
 };
 
 const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
-  const {error, success, selectedProduct} = useSelector((state) => state.product);
-  const [formData, setFormData] = useState(mode === 'new' ? {...InitialFormData} : selectedProduct);
+  const {error, success, productDetail} = useSelector((state) => state.products);
+  const [formData, setFormData] = useState(mode === 'new' ? {...InitialFormData} : productDetail);
   const [stock, setStock] = useState([]);
   const dispatch = useDispatch();
   const [stockError, setStockError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
 
   useEffect(() => {
-    if (success) setShowDialog(false);
+    if (success) {
+      handleClose();
+    }
   }, [success]);
+
+  const handleClose = () => {
+    //모든걸 초기화시키고;
+    // 다이얼로그 닫아주기
+    setStockError(false);
+    setPriceError(false);
+    setCategoryError(false);
+    setFormData({...InitialFormData});
+    setStock([]);
+    setShowDialog(false);
+  };
 
   useEffect(() => {
     if (error || !success) {
@@ -33,9 +49,9 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
     }
     if (showDialog) {
       if (mode === 'edit') {
-        setFormData(selectedProduct);
+        setFormData(productDetail);
         // 객체형태로 온 stock을  다시 배열로 세팅해주기
-        const sizeArray = Object.keys(selectedProduct.stock).map((size) => [size, selectedProduct.stock[size]]);
+        const sizeArray = Object.keys(productDetail.stock).map((size) => [size, productDetail.stock[size]]);
         setStock(sizeArray);
       } else {
         setFormData({...InitialFormData});
@@ -43,11 +59,6 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
       }
     }
   }, [showDialog]);
-
-  const handleClose = () => {
-    //모든걸 초기화시키고;
-    // 다이얼로그 닫아주기
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -153,9 +164,8 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
                     <option value='' disabled selected hidden>
                       Please Choose...
                     </option>
-                    {SIZE.map((item, index) => (
+                    {Object.keys(formData.stock).map((item, index) => (
                       <option
-                        inValid={true}
                         value={item.toLowerCase()}
                         disabled={stock.some((size) => size[0] === item.toLowerCase())}
                         key={index}>
@@ -185,7 +195,7 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
 
         <Form.Group className='mb-3' controlId='Image' required>
           <Form.Label>Image</Form.Label>
-          <CloudinaryUploadWidget uploadImage={uploadImage} />
+          {/* <CloudinaryUploadWidget uploadImage={uploadImage} /> */}
 
           <img id='uploadedimage' src={formData.image} className='upload-image mt-2' alt='uploadedimage'></img>
         </Form.Group>
@@ -199,7 +209,7 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
           <Form.Group as={Col} controlId='category'>
             <Form.Label>Category</Form.Label>
             <Form.Control as='select' multiple onChange={onHandleCategory} value={formData.category} required>
-              {CATEGORY.map((item, idx) => (
+              {Object.keys(formData.category).map((item, idx) => (
                 <option key={idx} value={item.toLowerCase()}>
                   {item}
                 </option>
@@ -210,7 +220,7 @@ const NewItemDialog = ({mode, showDialog, setShowDialog}) => {
           <Form.Group as={Col} controlId='status'>
             <Form.Label>Status</Form.Label>
             <Form.Select value={formData.status} onChange={handleChange} required>
-              {STATUS.map((item, idx) => (
+              {Object.keys(formData.status).map((item, idx) => (
                 <option key={idx} value={item.toLowerCase()}>
                   {item}
                 </option>
