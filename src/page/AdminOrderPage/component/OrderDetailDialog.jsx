@@ -3,19 +3,28 @@ import {Modal, Button, Form} from 'react-bootstrap';
 import './OrderDetailDialog.style.css';
 
 const OrderDetailDialog = ({open, handleClose, order, handleStatusChange}) => {
-  if (!order) return null; // 주문이 없으면 아무것도 렌더링하지 않음
+  // 기본 주문 데이터 설정
+  const defaultOrder = {
+    orderNum: 'N/A',
+    createdAt: new Date().toISOString(),
+    user: 'N/A',
+    address: 'N/A',
+    totalPrice: 0,
+    items: []
+  };
 
-  const [status, setStatus] = useState(order.status); // 상태 초기화
+  const currentOrder = order || defaultOrder; // 주문 데이터가 없으면 기본 데이터 사용
+  const [status, setStatus] = useState(currentOrder.status || 'preparing');
 
   const handleStatusSelect = (e) => {
-    setStatus(e.target.value); // 상태 변경
+    setStatus(e.target.value);
   };
 
   const handleSaveStatus = () => {
-    console.log('주문 ID:', order._id); // 주문 ID 확인
-    console.log('새로운 상태:', status); // 상태 값 확인
-    handleStatusChange(order._id, status); // 부모로 상태 변경 요청
-    handleClose(); // 다이얼로그 닫기
+    console.log('주문 ID:', currentOrder._id);
+    console.log('새로운 상태:', status);
+    handleStatusChange(currentOrder._id, status);
+    handleClose();
   };
 
   return (
@@ -24,11 +33,11 @@ const OrderDetailDialog = ({open, handleClose, order, handleStatusChange}) => {
         <Modal.Title>주문 상세 정보</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h5>주문 번호: {order.orderNum}</h5>
-        <p>주문 날짜: {new Date(order.createdAt).toLocaleString()}</p>
-        <p>고객 이름: {order.user}</p>
-        <p>주소: {order.address}</p>
-        <p>총 가격: {order.totalPrice.toLocaleString()} 원</p>
+        <h5>주문 번호: {currentOrder.orderNum}</h5>
+        <p>주문 날짜: {new Date(currentOrder.createdAt).toLocaleString()}</p>
+        <p>고객 이름: {currentOrder.user}</p>
+        <p>주소: {currentOrder.address}</p>
+        <p>총 가격: {currentOrder.totalPrice.toLocaleString()} 원</p>
 
         {/* 상태 변경 드롭다운 추가 */}
         <Form.Group controlId='orderStatus'>
@@ -43,11 +52,15 @@ const OrderDetailDialog = ({open, handleClose, order, handleStatusChange}) => {
 
         <h6>주문 항목:</h6>
         <ul>
-          {order.items.map((item) => (
-            <li key={item.id}>
-              {item.name} - 수량: {item.quantity}
-            </li>
-          ))}
+          {currentOrder.items.length > 0 ? (
+            currentOrder.items.map((item) => (
+              <li key={item.id}>
+                {item.name} - 수량: {item.quantity}
+              </li>
+            ))
+          ) : (
+            <li>주문 항목이 없습니다.</li> // 항목이 없을 경우 메시지 표시
+          )}
         </ul>
       </Modal.Body>
       <Modal.Footer>

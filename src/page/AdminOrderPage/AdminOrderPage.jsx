@@ -15,7 +15,7 @@ const AdminOrderPage = () => {
   });
 
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(true);
 
   const handlePageClick = ({selected}) => {
     setSearchQuery({...searchQuery, page: selected + 1});
@@ -79,8 +79,8 @@ const AdminOrderPage = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id} onClick={() => openDetailDialog(order)}>
-                <td>{order.orderNum}</td>
+              <tr key={order._id}>
+                <td onClick={() => openDetailDialog(order)}>{order.orderNum}</td>
                 <td>{order.userId.email}</td>
                 <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                 <td>{order.status}</td>
@@ -95,7 +95,7 @@ const AdminOrderPage = () => {
         nextLabel='next >'
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={totalPageNum} // 슬라이스에서 받아온 총 페이지 수
+        pageCount={totalPageNum}
         forcePage={searchQuery.page - 1}
         previousLabel='< previous'
         renderOnZeroPageCount={null}
