@@ -61,7 +61,6 @@ const AdminOrderPage = () => {
       console.error('주문 상태 업데이트 중 오류 발생:', error);
     }
   };
-  console.log(orders);
 
   return (
     <div className='admin-order-page admin-order-section'>
