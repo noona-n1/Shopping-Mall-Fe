@@ -1,24 +1,22 @@
 # OF-YOU
+
 <br>
 <div align="center">
   <img src="https://github.com/user-attachments/assets/14f9c18e-955f-4a4e-9c36-375700546fad" alt="OF-YOU">
 </div>
 
-
 # OF-YOU ShoppingMall Page
 
-
-
 > **코딩알려주는누나 Node.js Study Group Project<br>
-개발기간 : 2024.11.10 ~ 2024.11.24**
+> 개발기간 : 2024.11.10 ~ 2024.11.24**
 
 ## 배포주소
-> **개발버전** : https://of-you.netlify.app/ <br>
-> **백엔드 서버 (Heroku)**: https://of-you-150add69b1bb.herokuapp.com/
+
+> **개발버전** : https://of-you.netlify.app/ <br> > **백엔드 서버 (Heroku)**: https://of-you-150add69b1bb.herokuapp.com/
 
 ## 웹개발팀 소개
-<div style="display: flex; width: 636px; height:202px; border: 1px solid ;gap: 10px;">
 
+<div style="display: flex; width: 636px; height:202px; border: 1px solid ;gap: 10px;">
 
   <div style="width: 150px; height: 202px;  border-right: 1px solid; background-color: ;">
     <div style="width: 150px; height: 30px;  border-right: 1px solid; border-bottom:1px solid; background-color: ; display: flex; align-items: center; justify-content: center; font-weight:bold">
@@ -96,6 +94,5 @@
     
  
 </div>
-
 
 ## 프로젝트 소개
